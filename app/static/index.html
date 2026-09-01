@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Readiness & Career Intelligence Portal</title>
+    <!-- Modern Google Font: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <header class="navbar">
+            <div class="logo-group">
+                <div class="logo-icon"><i class="fa-solid fa-brain-circuit"></i></div>
+                <div>
+                    <h1 class="logo-title">Placement<span class="highlight">Intelligence</span></h1>
+                    <p class="logo-subtitle">Agentic AI Readiness System • Labs 1–5</p>
+                </div>
+            </div>
+
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="workflow-tab">
+                    <i class="fa-solid fa-bolt-lightning"></i> Full Pipeline
+                </button>
+                <button class="nav-tab" data-tab="agent-tab">
+                    <i class="fa-solid fa-comments"></i> Agent Loop (Lab 1)
+                </button>
+                <button class="nav-tab" data-tab="analysis-tab">
+                    <i class="fa-solid fa-chart-pie"></i> Readiness Tool (Lab 2)
+                </button>
+                <button class="nav-tab" data-tab="memory-tab">
+                    <i class="fa-solid fa-database"></i> Vector Memory (Lab 4)
+                </button>
+                <button class="nav-tab" data-tab="create-student-tab">
+                    <i class="fa-solid fa-user-plus"></i> Add New Student
+                </button>
+            </nav>
+
+            <div class="system-status">
+                <div class="api-key-input-wrapper" title="Bring Your Own Gemini API Key">
+                    <i class="fa-solid fa-key key-icon"></i>
+                    <input type="password" id="custom-api-key-input" placeholder="Paste Gemini API Key...">
+                    <button id="save-api-key-btn" title="Save API Key"><i class="fa-solid fa-check"></i></button>
+                </div>
+                <div class="status-badge" id="llm-status-badge">
+                    <span class="status-dot pulsating"></span>
+                    <span id="llm-status-text">Checking LLM...</span>
+                </div>
+                <div class="status-badge" id="api-status-badge">
+                    <span class="status-dot online"></span>
+                    <span>API Ready</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="content-wrapper">
+            
+            <!-- TAB 1: FULL PIPELINE WORKFLOW (LABS 1-5) -->
+            <section id="workflow-tab" class="tab-pane active">
+                <div class="grid-layout">
+                    <!-- Config Panel -->
+                    <div class="glass-card config-panel">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-sliders"></i> Pipeline Parameters</h3>
+                            <span class="pill-tag">Labs 1–5 Orchestrated</span>
+                        </div>
+                        <form id="run-form">
+                            <div class="form-group">
+                                <label for="run-student-id">Select Student Profile</label>
+                                <select id="run-student-id" class="input-control" required>
+                                    <option value="student_001">Arjun Mehta (student_001 - CS, 350 solved)</option>
+                                    <option value="student_002">Priya Sharma (student_002 - IT, 120 solved)</option>
+                                    <option value="student_003">Rohan Das (student_003 - CS, 220 solved)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="run-target-role">Target Role</label>
+                                <select id="run-target-role" class="input-control" required>
+                                    <option value="Software Engineer">Software Engineer</option>
+                                    <option value="Data Analyst">Data Analyst</option>
+                                    <option value="ML Engineer">ML Engineer</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="run-actor-role">User Role Context (Governance)</label>
+                                <select id="run-actor-role" class="input-control">
+                                    <option value="system">System (Full Access)</option>
+                                    <option value="placement_officer">Placement Officer (Full Access)</option>
+                                    <option value="student">Student (Self Access Only)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block" id="run-workflow-btn">
+                                <i class="fa-solid fa-play"></i> Run Agentic Readiness Workflow
+                            </button>
+                        </form>
+
+                        <div class="agent-steps-mini">
+                            <h4>Pipeline Progression</h4>
+                            <ul class="step-progress-list">
+                                <li class="step-item active" id="step-1"><i class="fa-solid fa-check"></i> Lab 1: Clarification & Planning</li>
+                                <li class="step-item" id="step-2"><i class="fa-solid fa-check"></i> Lab 5: Governed Data Fetch</li>
+                                <li class="step-item" id="step-3"><i class="fa-solid fa-check"></i> Lab 2: Deterministic Scoring</li>
+                                <li class="step-item" id="step-4"><i class="fa-solid fa-check"></i> Lab 4: Vector Memory Retrieval</li>
+                                <li class="step-item" id="step-5"><i class="fa-solid fa-check"></i> Lab 3: FormatSkill & AI Summary</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Results Panel -->
+                    <div class="glass-card result-panel">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-square-poll-vertical"></i> Readiness Intelligence Output</h3>
+                            <button class="btn btn-secondary btn-sm" id="copy-report-btn" style="display:none;">
+                                <i class="fa-regular fa-copy"></i> Copy Text Report
+                            </button>
+                        </div>
+
+                        <div id="workflow-placeholder" class="empty-state">
+                            <i class="fa-solid fa-robot floating-icon"></i>
+                            <h4>Ready for Analysis</h4>
+                            <p>Select a student profile and target role to execute the 5-lab agent loop and generate a complete placement report.</p>
+                        </div>
+
+                        <div id="workflow-results" style="display: none;">
+                            <!-- Score Gauge Header -->
+                            <div class="score-header-card">
+                                <div class="score-gauge">
+                                    <svg viewBox="0 0 36 36" class="circular-chart">
+                                        <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        <path class="circle" id="score-circle" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                        <text x="18" y="20.35" class="percentage" id="score-percentage">0%</text>
+                                    </svg>
+                                </div>
+                                <div class="score-details">
+                                    <div class="student-meta">
+                                        <h2 id="report-student-name">Student Name</h2>
+                                        <span class="role-badge" id="report-target-role">Software Engineer</span>
+                                    </div>
+                                    <div class="threshold-tag" id="report-threshold">
+                                        Checking Threshold...
+                                    </div>
+                                    <p class="run-id-text">Run ID: <code id="report-run-id">--</code> | Plan ID: <code id="report-plan-id">--</code></p>
+                                </div>
+                            </div>
+
+                            <!-- AI Executive Summary Card (if Gemini available) -->
+                            <div class="ai-summary-card" id="ai-summary-card" style="display:none;">
+                                <div class="ai-summary-title">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i> Gemini AI Executive Summary
+                                </div>
+                                <p id="ai-summary-text" class="ai-summary-body"></p>
+                            </div>
+
+                            <!-- Score Breakdown Cards -->
+                            <div class="metrics-grid">
+                                <div class="metric-card">
+                                    <span class="metric-label">Skill Coverage (50%)</span>
+                                    <span class="metric-value" id="val-skill-coverage">0%</span>
+                                    <div class="progress-bar"><div class="progress-fill" id="bar-skill-coverage" style="width: 0%;"></div></div>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Coding Score (30%)</span>
+                                    <span class="metric-value" id="val-coding-score">0</span>
+                                    <div class="progress-bar"><div class="progress-fill" id="bar-coding-score" style="width: 0%;"></div></div>
+                                </div>
+                                <div class="metric-card">
+                                    <span class="metric-label">Project Score (20%)</span>
+                                    <span class="metric-value" id="val-project-score">0%</span>
+                                    <div class="progress-bar"><div class="progress-fill" id="bar-project-score" style="width: 0%;"></div></div>
+                                </div>
+                            </div>
+
+                            <!-- Strengths & Gaps Grid -->
+                            <div class="detail-grid">
+                                <div class="info-card">
+                                    <h4><i class="fa-solid fa-circle-check text-success"></i> Key Strengths</h4>
+                                    <ul id="report-strengths-list" class="badge-list"></ul>
+                                </div>
+                                <div class="info-card">
+                                    <h4><i class="fa-solid fa-triangle-exclamation text-warning"></i> Skill Gaps</h4>
+                                    <ul id="report-gaps-list" class="badge-list"></ul>
+                                </div>
+                            </div>
+
+                            <!-- Next Steps -->
+                            <div class="info-card full-width">
+                                <h4><i class="fa-solid fa-list-check text-primary"></i> Actionable Next Steps</h4>
+                                <ol id="report-steps-list" class="action-steps-list"></ol>
+                            </div>
+
+                            <!-- Historical Vector Memory Match -->
+                            <div class="info-card full-width">
+                                <h4><i class="fa-solid fa-clock-rotate-left"></i> Similar Historical Cases (ChromaDB)</h4>
+                                <div id="report-cases-container" class="cases-grid"></div>
+                            </div>
+
+                            <!-- Raw Report Accordion -->
+                            <details class="raw-report-details">
+                                <summary><i class="fa-solid fa-terminal"></i> View Formatted Text Report Output</summary>
+                                <pre id="report-raw-text"></pre>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: AGENT CLARIFICATION & PLANNING LOOP (LAB 1) -->
+            <section id="agent-tab" class="tab-pane">
+                <div class="grid-layout">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-comments"></i> Lab 1 Agent Loop Demo</h3>
+                            <span class="pill-tag">Clarify → Plan → Revise</span>
+                        </div>
+                        <p class="description-text">
+                            Experience how the <code>PlannerAgent</code> uses <strong>Gemini AI</strong> to detect incomplete requests and prompt for clarification rather than hallucinating details.
+                        </p>
+
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chat-box">
+                                <div class="chat-bubble agent">
+                                    <div class="chat-sender"><i class="fa-solid fa-robot"></i> PlannerAgent</div>
+                                    <p>Hello! Type any placement request, vague or detailed (e.g. <em>"I want to know if I am ready for placements"</em> or <em>"Analyze student_001 for Software Engineer"</em>).</p>
+                                </div>
+                            </div>
+
+                            <form id="agent-input-form" class="chat-input-row">
+                                <input type="text" id="agent-raw-input" class="input-control" placeholder="Type a request (e.g. 'Am I ready for Software Engineer?')" required>
+                                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Send</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-diagram-project"></i> Active Readiness Plan</h3>
+                        </div>
+                        <div id="plan-display-container" class="empty-state">
+                            <i class="fa-solid fa-file-signature floating-icon"></i>
+                            <h4>No Plan Generated Yet</h4>
+                            <p>Send a request in the chat to see the agent generate or revise a structured <code>ReadinessPlan</code>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: READINESS CALCULATION TOOL (LAB 2) -->
+            <section id="analysis-tab" class="tab-pane">
+                <div class="grid-layout">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-calculator"></i> Lab 2 Readiness Calculator</h3>
+                            <span class="pill-tag">Deterministic Weighting</span>
+                        </div>
+                        <form id="analyze-form">
+                            <div class="form-group">
+                                <label>Select Student</label>
+                                <select id="tool-student-id" class="input-control">
+                                    <option value="student_001">student_001 (Arjun Mehta - CS)</option>
+                                    <option value="student_002">student_002 (Priya Sharma - IT)</option>
+                                    <option value="student_003">student_003 (Rohan Das - CS)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Target Role</label>
+                                <select id="tool-role-name" class="input-control">
+                                    <option value="Software Engineer">Software Engineer</option>
+                                    <option value="Data Analyst">Data Analyst</option>
+                                    <option value="ML Engineer">ML Engineer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-bolt"></i> Run Direct Tool Analysis</button>
+                        </form>
+                    </div>
+
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-microchip"></i> Calculated Output</h3>
+                        </div>
+                        <div id="tool-result-container">
+                            <div class="empty-state">
+                                <i class="fa-solid fa-chart-column floating-icon"></i>
+                                <h4>No Calculation Run</h4>
+                                <p>Click 'Run Direct Tool Analysis' to execute deterministic calculation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: VECTOR MEMORY RETRIEVAL (LAB 4) -->
+            <section id="memory-tab" class="tab-pane">
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Lab 4 Long-Term Memory (ChromaDB Vector Store)</h3>
+                    </div>
+                    <p class="description-text">
+                        Perform semantic vector searches over past student placement cases to find relevant historical outcomes and insights.
+                    </p>
+                    
+                    <form id="memory-search-form" class="chat-input-row" style="margin-bottom: 24px;">
+                        <input type="text" id="memory-query" class="input-control" placeholder="Search query (e.g. 'Software Engineer placed with high DSA', 'Data Analyst')" required>
+                        <select id="memory-k" class="input-control" style="width: 120px;">
+                            <option value="1">Top 1</option>
+                            <option value="3" selected>Top 3</option>
+                            <option value="5">Top 5</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-search"></i> Vector Search</button>
+                    </form>
+
+                    <div id="memory-results-grid" class="cases-grid"></div>
+                </div>
+            </section>
+
+            <!-- TAB 5: CREATE NEW STUDENT PROFILE -->
+            <section id="create-student-tab" class="tab-pane">
+                <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-user-plus"></i> Dynamic Student Profile Registration</h3>
+                        <span class="pill-tag">Persisted via PlacementConnector</span>
+                    </div>
+                    <p class="description-text" style="margin-bottom: 20px; color: var(--text-muted);">
+                        Register your own custom student details to test the placement readiness pipeline and receive custom AI readiness summaries!
+                    </p>
+
+                    <form id="create-student-form">
+                        <div class="detail-grid">
+                            <div class="form-group">
+                                <label for="new-student-id">Student ID</label>
+                                <input type="text" id="new-student-id" class="input-control" placeholder="e.g. student_004 or rishi_001" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-student-name">Full Name</label>
+                                <input type="text" id="new-student-name" class="input-control" placeholder="e.g. Rishi Kumar" required>
+                            </div>
+                        </div>
+
+                        <div class="detail-grid">
+                            <div class="form-group">
+                                <label for="new-student-branch">Department / Branch</label>
+                                <input type="text" id="new-student-branch" class="input-control" placeholder="e.g. Computer Science" value="Computer Science" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="new-student-cgpa">CGPA (0 - 10)</label>
+                                <input type="number" step="0.1" id="new-student-cgpa" class="input-control" placeholder="e.g. 8.5" value="8.5" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-student-skills">Skills & Proficiency (Comma-separated skill:proficiency)</label>
+                            <input type="text" id="new-student-skills" class="input-control" placeholder="e.g. Python:advanced, Java:intermediate, Docker:intermediate, Linux:advanced, DBMS:intermediate" value="Python:advanced, Docker:intermediate, Linux:advanced, DBMS:intermediate" required>
+                            <small class="description-text" style="color: var(--text-dim);">Proficiency levels: beginner, intermediate, advanced</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-student-projects">Projects (Comma-separated titles)</label>
+                            <input type="text" id="new-student-projects" class="input-control" placeholder="e.g. Cloud Infrastructure Automation, AI Chatbot App" value="Cloud Infrastructure Automation, AI Chatbot App">
+                        </div>
+
+                        <div class="detail-grid">
+                            <div class="form-group">
+                                <label for="new-problems-solved">DSA Problems Solved</label>
+                                <input type="number" id="new-problems-solved" class="input-control" value="280">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-contest-rating">Contest Rating</label>
+                                <input type="number" id="new-contest-rating" class="input-control" value="1550">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block" id="create-student-btn" style="margin-top: 16px;">
+                            <i class="fa-solid fa-save"></i> Save Profile & Select for Workflow
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+[
+  {
+    "student_id": "student_001",
+    "name": "Arjun Mehta",
+    "consent": true,
+    "branch": "Computer Science",
+    "cgpa": 8.4,
+    "skills": {
+      "DSA": "intermediate",
+      "Java": "intermediate",
+      "Python": "beginner",
+      "SQL": "intermediate",
+      "DBMS": "beginner",
+      "Operating Systems": "beginner",
+      "Computer Networks": "beginner"
+    },
+    "projects": [
+      "Data pipeline using Apache Spark",
+      "AI-based resume parser"
+    ],
+    "coding_stats": {
+      "problems_solved": 250,
+      "contest_rating": 1450
+    }
+  },
+  {
+    "student_id": "student_002",
+    "name": "Priya Sharma",
+    "consent": true,
+    "branch": "Information Technology",
+    "cgpa": 8.9,
+    "skills": {
+      "Python": "advanced",
+      "SQL": "advanced",
+      "Statistics": "intermediate",
+      "Excel": "intermediate",
+      "Tableau": "beginner",
+      "Machine Learning": "beginner",
+      "DSA": "beginner"
+    },
+    "projects": [
+      "Sales forecasting dashboard",
+      "Customer churn analysis"
+    ],
+    "coding_stats": {
+      "problems_solved": 120,
+      "contest_rating": 1100
+    }
+  },
+  {
+    "student_id": "student_003",
+    "name": "Rohan Das",
+    "consent": true,
+    "branch": "Computer Science",
+    "cgpa": 8.1,
+    "skills": {
+      "Python": "advanced",
+      "Machine Learning": "intermediate",
+      "Deep Learning": "intermediate",
+      "TensorFlow": "intermediate",
+      "SQL": "intermediate",
+      "DSA": "intermediate",
+      "Statistics": "intermediate"
+    },
+    "projects": [
+      "Image classification CNN",
+      "NLP sentiment analysis pipeline",
+      "Recommendation system"
+    ],
+    "coding_stats": {
+      "problems_solved": 180,
+      "contest_rating": 1320
+    }
+  },
+  {
+    "student_id": "student_004",
+    "name": "Rishi Kumar",
+    "consent": true,
+    "branch": "DevOps",
+    "cgpa": 8.9,
+    "skills": {
+      "Python": "advanced",
+      "Docker": "advanced",
+      "Linux": "advanced",
+      "Kubernetes": "intermediate"
+    },
+    "projects": [
+      "Cloud Pipeline Automation",
+      "Kubernetes Monitoring Tool"
+    ],
+    "coding_stats": {
+      "problems_solved": 310,
+      "contest_rating": 1620
+    }
+  },
+  {
+    "student_id": "student_005",
+    "name": "Ananya Verma",
+    "consent": true,
+    "branch": "CSE",
+    "cgpa": 9.2,
+    "skills": {
+      "Python": "advanced",
+      "DSA": "advanced",
+      "Machine Learning": "intermediate"
+    },
+    "projects": [
+      "Deep Learning Classifier"
+    ],
+    "coding_stats": {
+      "problems_solved": 420,
+      "contest_rating": 1750
+    }
+  },
+  {
+    "student_id": "Rishi_kulkarni",
+    "name": "Rishi Kulkarni",
+    "consent": true,
+    "branch": "Computer Science and Engineering (AI)",
+    "cgpa": 8.7,
+    "skills": {
+      "Python": "advanced",
+      "Docker": "intermediate",
+      "Linux": "advanced",
+      "DBMS": "advanced"
+    },
+    "projects": [
+      "Cloud Infrastructure Automation",
+      "AI Chatbot App",
+      "Infra master app"
+    ],
+    "coding_stats": {
+      "problems_solved": 150,
+      "contest_rating": 1000
+    }
+  }
+]

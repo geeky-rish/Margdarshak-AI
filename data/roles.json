@@ -1,0 +1,56 @@
+[
+  {
+    "role": "Software Engineer",
+    "required_skills": [
+      "DSA",
+      "Java",
+      "DBMS",
+      "Operating Systems",
+      "Computer Networks"
+    ],
+    "preferred_skills": [
+      "Python",
+      "System Design",
+      "Git"
+    ],
+    "minimum_readiness_score": 70,
+    "description": "Build scalable backend systems and APIs. Strong DSA and CS fundamentals required.",
+    "typical_companies": ["TCS", "Infosys", "Wipro", "Accenture", "Capgemini", "HCL"]
+  },
+  {
+    "role": "Data Analyst",
+    "required_skills": [
+      "SQL",
+      "Python",
+      "Statistics",
+      "Excel"
+    ],
+    "preferred_skills": [
+      "Tableau",
+      "Power BI",
+      "Machine Learning"
+    ],
+    "minimum_readiness_score": 60,
+    "description": "Analyze business data to drive decisions. Strong SQL and statistics required.",
+    "typical_companies": ["Deloitte", "EY", "PwC", "KPMG", "Amazon", "Flipkart"]
+  },
+  {
+    "role": "ML Engineer",
+    "required_skills": [
+      "Python",
+      "Machine Learning",
+      "Deep Learning",
+      "Statistics",
+      "SQL"
+    ],
+    "preferred_skills": [
+      "TensorFlow",
+      "PyTorch",
+      "MLOps",
+      "Docker"
+    ],
+    "minimum_readiness_score": 65,
+    "description": "Design and deploy machine learning models into production. Strong Python and ML fundamentals required.",
+    "typical_companies": ["Google", "Microsoft", "Amazon", "Swiggy", "Zomato", "CRED"]
+  }
+]

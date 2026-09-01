@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+wheels/
+pip-wheel-metadata/
+.installed.cfg
+*.egg-info
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ChromaDB persistent store
+.chroma_db/
+
+# IDE
+.vscode/
+.idea/
+
+# Local secret / private docs
+.env
+*.env
+apikey.txt
+PROJECT_DOCUMENTATION.md
+
+# OS
+.DS_Store
+Thumbs.db
