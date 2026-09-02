@@ -176,3 +176,61 @@ class TestMemorySeparation:
         """RetrievalStore is pre-seeded with historical data."""
         cases = retrieval.retrieve_similar_students("any student any role", k=10)
         assert len(cases) >= 1, "RetrievalStore should have at least one seeded case"
+
+
+# ---------------------------------------------------------------------------
+# ProjectMemory & Governance Compliance Tests (Lab 4 Rubric)
+# ---------------------------------------------------------------------------
+
+
+class TestProjectMemoryCompliance:
+    def test_memory_record_and_scoped_retrieval(self):
+        """Memory retrieval must be scoped by topic only."""
+        from app.memory.project_memory import ProjectMemory, MemoryRecord
+
+        mem = ProjectMemory()
+        mem.write(MemoryRecord("database", "we chose PostgreSQL", "2026-07-03"), "system")
+        mem.write(MemoryRecord("hosting", "we chose AWS", "2026-07-04"), "system")
+
+        db_hits = mem.retrieve("database")
+        assert len(db_hits) == 1
+        assert db_hits[0].fact == "we chose PostgreSQL"
+
+        hosting_hits = mem.retrieve("hosting")
+        assert len(hosting_hits) == 1
+        assert hosting_hits[0].fact == "we chose AWS"
+
+    def test_permission_gated_writes(self):
+        """Unpermitted user roles raise PermissionError when writing memory."""
+        from app.memory.project_memory import ProjectMemory, MemoryRecord
+
+        mem = ProjectMemory()
+        rec = MemoryRecord("database", "switch to MongoDB", "2026-07-05")
+
+        with pytest.raises(PermissionError, match="not permitted"):
+            mem.write(rec, user_role="unauthorized_student")
+
+    def test_conflict_detection(self):
+        """receive_statement detects conflicts with existing stored decision."""
+        from app.memory.project_memory import ProjectMemory, ProjectAssistant, MemoryRecord
+
+        mem = ProjectMemory()
+        mem.write(MemoryRecord("database", "we chose PostgreSQL", "2026-07-03"), "system")
+        assistant = ProjectAssistant(mem)
+
+        res = assistant.receive_statement("database", "we are switching to SQLite", "student")
+        assert res["conflict"] is True
+        assert "conflicts" in res["message"].lower()
+
+    def test_source_tagging_and_staleness_warning(self):
+        """assistant.answer tags memory source and warns if stale."""
+        from app.memory.project_memory import ProjectMemory, ProjectAssistant, MemoryRecord
+
+        mem = ProjectMemory(retention_days=7)
+        mem.write(MemoryRecord("database", "we chose PostgreSQL", "2025-01-01"), "system")
+        assistant = ProjectAssistant(mem)
+
+        ans = assistant.answer("database", "What DB was chosen?")
+        assert "[memory, dated 2025-01-01]" in ans
+        assert "stale" in ans.lower()
+

@@ -23,6 +23,20 @@ from app.agents.planner_agent import PlannerAgent
 from app.models.schemas import ClarifiedRequest, ReadinessPlan
 
 
+SKILL_SPEC: dict[str, Any] = {
+    "name": "plan_creation",
+    "instructions": [
+        "gather required student profile and target role details",
+        "construct ordered sequence of workflow steps",
+        "initialize plan in 'draft' status",
+    ],
+    "constraints": [
+        "preserve unique plan_id across revisions",
+        "do not execute locked plans",
+    ],
+}
+
+
 class PlanSkillInput(BaseModel):
     """Typed input for PlanSkill."""
 
@@ -42,6 +56,7 @@ class PlanSkill:
     """
 
     def __init__(self) -> None:
+        self.spec = SKILL_SPEC
         self._agent = PlannerAgent()
 
     def create_readiness_plan(

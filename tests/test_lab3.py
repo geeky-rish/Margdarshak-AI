@@ -202,3 +202,52 @@ class TestFormatSkillReusability:
             analysis=analysis, plan=plan, student_name=profile.name
         )
         assert len(report.recommended_steps) >= 1
+
+
+# ---------------------------------------------------------------------------
+# ResearchSummarySkill & Reusability Audit Tests (Lab 3 Rubric)
+# ---------------------------------------------------------------------------
+
+
+class TestResearchSummarySkill:
+    def test_research_summary_skill_spec(self):
+        """Skill must expose SKILL_SPEC metadata."""
+        from app.skills.research_skill import ResearchSummarySkill, SKILL_SPEC
+
+        skill = ResearchSummarySkill()
+        assert skill.spec == SKILL_SPEC
+        assert "instructions" in skill.spec
+        assert "constraints" in skill.spec
+
+    def test_research_summary_contract_and_fallback(self):
+        """Skill output must contain claim, evidence, limitation, takeaway."""
+        from app.skills.research_skill import ResearchSummarySkill
+
+        skill = ResearchSummarySkill()
+        article = {
+            "title": "RAG Study",
+            "text": "RAG reduces hallucination. Tested on 200 medical QA pairs. Small single domain sample.",
+        }
+        res = skill.summarize(article)
+        assert "claim" in res
+        assert "evidence" in res
+        assert "limitation" in res
+        assert "takeaway" in res
+        assert "small" in res["limitation"].lower()
+
+    def test_reusability_check_passes(self):
+        """reusability_check verifies identical schema keys across inputs."""
+        from app.skills.research_skill import ResearchSummarySkill, reusability_check
+
+        skill = ResearchSummarySkill()
+        art_a = {"title": "A", "text": "Claim A. Evidence A. Small sample size."}
+        art_b = {"title": "B", "text": "Claim B. Evidence B. Restricted setting."}
+
+        out_a = skill.summarize(art_a)
+        out_b = skill.summarize(art_b)
+
+        check = reusability_check(out_a, out_b)
+        assert check["same_structure"] is True
+        assert check["both_have_limitation"] is True
+        assert check["is_reusable"] is True
+
