@@ -163,3 +163,43 @@ class TestPlanRevision:
 
         with pytest.raises(ValueError, match="locked"):
             agent.revise_plan(locked, {"target_role": "Data Analyst"})
+
+
+# ---------------------------------------------------------------------------
+# Loop Compliance Tests (Lab 1 Rubric)
+# ---------------------------------------------------------------------------
+
+
+class TestAgentLoopCompliance:
+    def test_goal_is_modeled_as_data(self, agent: PlannerAgent):
+        """Goal must be a checkable data structure (dict with fields)."""
+        assert isinstance(agent.goal, dict)
+        assert "student_id" in agent.goal
+        assert "target_role" in agent.goal
+        assert "plan_generated" in agent.goal
+
+    def test_stopping_condition_declared(self, agent: PlannerAgent):
+        """satisfied() must evaluate stopping condition goal['plan_generated']."""
+        assert agent.satisfied() is False
+        agent.goal["plan_generated"] = True
+        assert agent.satisfied() is True
+
+    def test_run_populates_iteration_log(self, agent: PlannerAgent):
+        """run() must execute loop and populate iteration log with step data."""
+        plan = agent.run()
+        assert plan.student_id == "student_001"
+        assert len(agent.log) >= 3
+        for entry in agent.log:
+            assert "iteration" in entry
+            assert "planned" in entry
+            assert "action" in entry
+            assert "stopped" in entry
+
+    def test_revise_appends_to_log_without_restarting(self, agent: PlannerAgent):
+        """revise_plan() must append revision entries to existing log."""
+        plan = agent.run()
+        initial_log_count = len(agent.log)
+        _ = agent.revise_plan(plan, {"target_role": "Data Analyst"})
+        assert len(agent.log) == initial_log_count + 2
+        assert agent.log[-1]["stopped"] is True
+

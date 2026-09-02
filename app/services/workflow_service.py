@@ -41,7 +41,10 @@ class WorkflowService:
     Runs the full Labs 1–5 placement readiness workflow for a given
     ClarifiedRequest.
 
-    Dependencies are injected so they can be swapped in tests.
+    Lab 2 tool calling discipline:
+        - Central choke-point: call_tool() logs tool, reason, input, output.
+        - Error checking: raises RuntimeError if tool result dict contains an 'error' key.
+        - Trace log: preserved in self.trace and state.tool_results.
     """
 
     def __init__(
@@ -53,6 +56,37 @@ class WorkflowService:
         self._retrieval = retrieval_store
         self._plan_skill = PlanSkill()
         self._format_skill = FormatSkill()
+        self.trace: list[dict[str, Any]] = []
+
+    def call_tool(self, tool_name: str, reason: str, func, **kwargs) -> Any:
+        """
+        Single choke point through which every tool call passes (Lab 2 discipline).
+
+        Logs: tool_name, reason, input, output.
+        Raises: RuntimeError if output dict contains an 'error' key.
+        """
+        raw_result = func(**kwargs)
+
+        # Normalise output for trace logging & contract check
+        if hasattr(raw_result, "model_dump"):
+            result_dict = {"result": raw_result.model_dump()}
+        elif isinstance(raw_result, dict):
+            result_dict = raw_result
+        else:
+            result_dict = {"result": str(raw_result)}
+
+        entry = {
+            "tool": tool_name,
+            "reason": reason,
+            "input": {k: str(v) if not isinstance(v, (int, float, bool, str)) else v for k, v in kwargs.items()},
+            "output": result_dict,
+        }
+        self.trace.append(entry)
+
+        if isinstance(result_dict, dict) and "error" in result_dict:
+            raise RuntimeError(f"Tool {tool_name} failed: {result_dict['error']}")
+
+        return raw_result
 
     def execute(
         self,
@@ -84,18 +118,46 @@ class WorkflowService:
         # ── Create connector (Lab 5) ──────────────────────────────────────
         connector = PlacementConnector(context)
 
-        # ── Step 1: Fetch data via connector (Lab 5 governs all access) ───
-        profile = get_student_profile(clarified.student_id, connector)
-        role = get_role_requirements(clarified.target_role, connector)
-        assessment = get_skill_assessment(clarified.student_id, connector)
+        # ── Step 1: Fetch data via central tool choke-point (Lab 2 & Lab 5) ──
+        profile = self.call_tool(
+            "get_student_profile",
+            "Fetch student profile data via PlacementConnector",
+            get_student_profile,
+            student_id=clarified.student_id,
+            connector=connector,
+        )
+
+        role = self.call_tool(
+            "get_role_requirements",
+            "Fetch role requirements data via PlacementConnector",
+            get_role_requirements,
+            role_name=clarified.target_role,
+            connector=connector,
+        )
+
+        assessment = self.call_tool(
+            "get_skill_assessment",
+            "Fetch formal skill assessment via PlacementConnector",
+            get_skill_assessment,
+            student_id=clarified.student_id,
+            connector=connector,
+        )
 
         state.tool_results["profile"] = profile.model_dump()
         state.tool_results["role"] = role.model_dump()
         state.tool_results["assessment"] = assessment.model_dump()
+        state.tool_results["trace"] = self.trace
         self._session.save(state)
 
         # ── Step 2: Calculate readiness (Lab 2 deterministic tools) ───────
-        analysis = calculate_readiness(profile, role, assessment)
+        analysis = self.call_tool(
+            "calculate_readiness",
+            "Compute deterministic readiness scores across skill coverage, coding stats, and projects",
+            calculate_readiness,
+            profile=profile,
+            role=role,
+            assessment=assessment,
+        )
         state.current_analysis = analysis
         self._session.save(state)
 

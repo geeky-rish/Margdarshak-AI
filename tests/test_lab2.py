@@ -216,3 +216,49 @@ class TestReadinessCalculation:
         role = RoleRequirements(role="Empty Role", required_skills=[], minimum_readiness_score=50)
         with pytest.raises(ValueError, match="required skills"):
             validate_inputs(profile, role)
+
+
+# ---------------------------------------------------------------------------
+# Tool Dispatcher & Trace Compliance Tests (Lab 2 Rubric)
+# ---------------------------------------------------------------------------
+
+
+class TestToolChokePointAndTrace:
+    def test_workflow_service_call_tool_records_trace(self, connector: PlacementConnector):
+        """call_tool must record tool name, reason, inputs, and outputs in trace."""
+        from app.services.workflow_service import WorkflowService
+        from app.memory.session_memory import SessionMemory
+        from app.memory.retrieval_store import RetrievalStore
+        from app.models.schemas import ClarifiedRequest
+
+        service = WorkflowService(SessionMemory(), RetrievalStore())
+        clarified = ClarifiedRequest(student_id="student_001", target_role="Software Engineer")
+
+        state, report = service.execute(clarified, AccessContext(actor_id="system", actor_role="system"))
+
+        assert len(service.trace) >= 4
+        tool_names = [t["tool"] for t in service.trace]
+        assert "get_student_profile" in tool_names
+        assert "get_role_requirements" in tool_names
+        assert "get_skill_assessment" in tool_names
+        assert "calculate_readiness" in tool_names
+
+        for entry in service.trace:
+            assert "reason" in entry
+            assert "input" in entry
+            assert "output" in entry
+
+    def test_call_tool_raises_on_error_key(self):
+        """call_tool must raise RuntimeError if tool output contains an 'error' key."""
+        from app.services.workflow_service import WorkflowService
+        from app.memory.session_memory import SessionMemory
+        from app.memory.retrieval_store import RetrievalStore
+
+        service = WorkflowService(SessionMemory(), RetrievalStore())
+
+        def faulty_tool():
+            return {"error": "Simulated tool failure"}
+
+        with pytest.raises(RuntimeError, match="Simulated tool failure"):
+            service.call_tool("faulty_tool", "Testing error detection", faulty_tool)
+

@@ -70,16 +70,93 @@ class PlannerAgent:
     """
     Lab 1 agent: clarifies vague requests, produces plans, and revises them.
 
-    The agent loop is:
-        clarify(raw_request) → ClarificationResponse | ClarifiedRequest
-        create_plan(clarified)  → ReadinessPlan
-        revise_plan(plan, feedback) → ReadinessPlan
-
-    LLM usage:
-        When Gemini is available, clarify() uses it to parse the request and
-        generate natural questions. The deterministic fallback is always used
-        if the LLM call fails or returns unusable output.
+    Lab 1 loop structure:
+        goal: Data dict tracking missing requirements and completion state.
+        satisfied(): Declared stopping condition (goal["plan_generated"] is True).
+        next_step(): Planner deciding whether to ask or generate plan.
+        run(): Loop processing steps and building iteration log.
+        revise_plan(): Mutates plan and appends revision steps to iteration log.
     """
+
+    def __init__(self) -> None:
+        # Goal modeled as data — checkable predicate, not prose
+        self.goal: dict[str, Any] = {
+            "student_id": None,
+            "target_role": None,
+            "focus_areas": None,
+            "plan_generated": False,
+        }
+        self.plan: ReadinessPlan | None = None
+        self.log: list[dict[str, Any]] = []
+
+    # ------------------------------------------------------------------
+    # Goal check & Planner Loop
+    # ------------------------------------------------------------------
+
+    def satisfied(self) -> bool:
+        """Stopping condition declared before the loop runs."""
+        return self.goal["plan_generated"] is True
+
+    def next_step(self) -> tuple[str, str | None]:
+        """Planner: inspect goal and decide next step."""
+        for field in ("student_id", "target_role"):
+            if self.goal[field] is None:
+                return ("ask", field)
+        if self.goal["focus_areas"] is None:
+            return ("ask", "focus_areas")
+        return ("generate_plan", None)
+
+    def run(
+        self,
+        answers: dict[str, Any] | None = None,
+        api_key: str | None = None,
+    ) -> ReadinessPlan:
+        """
+        Execute the full Goal → Plan → Act → Observe → Revise loop.
+        """
+        simulated = {
+            "student_id": "student_001",
+            "target_role": "Software Engineer",
+            "focus_areas": ["DSA", "Operating Systems"],
+        }
+        answers = answers or simulated
+
+        while not self.satisfied():
+            step, arg = self.next_step()
+
+            if step == "ask":
+                answer = answers.get(arg)
+                self.goal[arg] = answer
+                self.log.append({
+                    "iteration": len(self.log) + 1,
+                    "planned": f"ask for {arg}",
+                    "action": f"asked user for {arg}",
+                    "observed": answer,
+                    "stopped": False,
+                })
+
+            elif step == "generate_plan":
+                clarified = ClarifiedRequest(
+                    student_id=self.goal["student_id"],
+                    target_role=self.goal["target_role"],
+                    focus_areas=self.goal["focus_areas"] or [],
+                )
+                self.plan = self.create_plan(clarified, api_key=api_key)
+                self.goal["plan_generated"] = True
+                self.log.append({
+                    "iteration": len(self.log) + 1,
+                    "planned": "generate schedule from gathered requirements",
+                    "action": "built ReadinessPlan",
+                    "observed": {
+                        "plan_id": self.plan.plan_id,
+                        "student_id": self.plan.student_id,
+                        "target_role": self.plan.target_role,
+                    },
+                    "stopped": True,
+                    "stop_reason": "goal['plan_generated'] is now True",
+                })
+
+        return self.plan
 
     # ------------------------------------------------------------------
     # Step 1 — Clarify
@@ -344,6 +421,14 @@ class PlannerAgent:
                 "Create a new plan if changes are needed."
             )
 
+        self.log.append({
+            "iteration": len(self.log) + 1,
+            "planned": "apply user feedback to existing plan",
+            "action": f"feedback received: '{feedback}'",
+            "observed": None,
+            "stopped": False,
+        })
+
         updated = plan.model_copy(deep=True)
 
         if "target_role" in feedback:
@@ -357,6 +442,18 @@ class PlannerAgent:
 
         if feedback.get("lock"):
             updated.status = "locked"
+
+        self.log.append({
+            "iteration": len(self.log) + 1,
+            "planned": "confirm revised plan",
+            "action": "mutated existing plan (not regenerated from scratch)",
+            "observed": {
+                "plan_id": updated.plan_id,
+                "target_role": updated.target_role,
+            },
+            "stopped": True,
+            "stop_reason": "revision applied without restarting the loop",
+        })
 
         return updated
 
