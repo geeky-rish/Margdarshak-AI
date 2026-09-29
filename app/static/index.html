@@ -20,7 +20,7 @@
                 <div class="logo-icon"><i class="fa-solid fa-brain-circuit"></i></div>
                 <div>
                     <h1 class="logo-title">Placement<span class="highlight">Intelligence</span></h1>
-                    <p class="logo-subtitle">Agentic AI Readiness System • Labs 1–5</p>
+                    <p class="logo-subtitle">Agentic AI Readiness System • Labs 1–8</p>
                 </div>
             </div>
 
@@ -38,7 +38,16 @@
                     <i class="fa-solid fa-database"></i> Vector Memory (Lab 4)
                 </button>
                 <button class="nav-tab" data-tab="create-student-tab">
-                    <i class="fa-solid fa-user-plus"></i> Add New Student
+                    <i class="fa-solid fa-user-plus"></i> Add Student
+                </button>
+                <button class="nav-tab" data-tab="lab7-tab">
+                    <i class="fa-solid fa-diagram-project"></i> Node Graph (Lab 7)
+                </button>
+                <button class="nav-tab" data-tab="lab6-tab">
+                    <i class="fa-solid fa-gavel"></i> Runtime & Audit (Lab 6)
+                </button>
+                <button class="nav-tab" data-tab="lab8-tab">
+                    <i class="fa-solid fa-network-wired"></i> Swarm Batch (Lab 8)
                 </button>
             </nav>
 
@@ -382,6 +391,157 @@
                             <i class="fa-solid fa-save"></i> Save Profile & Select for Workflow
                         </button>
                     </form>
+                </div>
+            </section>
+
+            <!-- TAB: NODE GRAPH (LAB 7) -->
+            <section id="lab7-tab" class="tab-pane">
+                <div class="grid-layout">
+                    <div class="glass-card config-panel">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-diagram-project"></i> Run Lab 7 Graph</h3>
+                        </div>
+                        <form id="lab7-form">
+                            <div class="form-group">
+                                <label>Select Student</label>
+                                <select id="lab7-student-id" class="input-control" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Target Role</label>
+                                <select id="lab7-target-role" class="input-control" required>
+                                    <option value="Software Engineer">Software Engineer</option>
+                                    <option value="Data Analyst">Data Analyst</option>
+                                    <option value="ML Engineer">ML Engineer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" id="lab7-run-btn">
+                                <i class="fa-solid fa-play"></i> Start Agentic Node Graph
+                            </button>
+                        </form>
+                    </div>
+                    <div class="glass-card result-panel">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-network-wired"></i> Graph Execution State</h3>
+                            <span class="pill-tag" id="lab7-status-pill">Status: None</span>
+                        </div>
+                        <div style="margin-bottom: 15px; color: var(--text-dim);">
+                            Run ID: <code id="lab7-run-id">--</code> | Approval: <code id="lab7-approval">--</code>
+                        </div>
+                        <div class="agent-steps-mini">
+                            <h4>Nodes</h4>
+                            <ul class="step-progress-list" id="lab7-nodes-list">
+                                <li class="step-item" id="node-resume_agent">Resume Agent</li>
+                                <li class="step-item" id="node-skill_gap_agent">Skill Gap Agent</li>
+                                <li class="step-item" id="node-coding_analytics_agent">Coding Analytics Agent</li>
+                                <li class="step-item" id="node-job_matching_agent">Job Matching Agent</li>
+                                <li class="step-item" id="node-interview_agent">Interview Agent</li>
+                                <li class="step-item" id="node-validation_agent">Validation Agent</li>
+                            </ul>
+                        </div>
+                        <div id="lab7-validation" style="margin-top:20px;display:none;">
+                            <h4>Validation Result</h4>
+                            <pre id="lab7-validation-text" class="json-display" style="background:var(--bg-elevated); padding:10px; border-radius:6px; overflow-x:auto;"></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: GOVERNED RUNTIME (LAB 6) -->
+            <section id="lab6-tab" class="tab-pane">
+                <div class="glass-card" style="max-width: 1000px; margin: 0 auto;">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-gavel"></i> Runtime Governance & Audit</h3>
+                    </div>
+                    <div class="chat-input-row" style="margin-bottom:20px;">
+                        <input type="text" id="lab6-run-id" class="input-control" placeholder="Enter Run ID (e.g. run_abc123)">
+                        <button class="btn btn-secondary" id="lab6-fetch-btn">Fetch Status & Audit</button>
+                    </div>
+                    
+                    <div class="detail-grid">
+                        <div class="info-card">
+                            <h4>Run Information</h4>
+                            <p>Status: <code id="lab6-status">--</code></p>
+                            <p>Approval: <code id="lab6-approval">--</code></p>
+                            <p>Checkpoint: <code id="lab6-budget">--</code></p>
+                        </div>
+                        <div class="info-card">
+                            <h4>Gate Actions</h4>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                <button class="btn btn-secondary btn-sm" id="lab6-resume-btn">Resume</button>
+                                <button class="btn btn-success btn-sm" id="lab6-approve-btn">Approve</button>
+                                <button class="btn btn-warning btn-sm" id="lab6-revise-btn">Request Revise</button>
+                                <button class="btn btn-danger btn-sm" id="lab6-reject-btn">Reject</button>
+                                <button class="btn btn-primary btn-sm" id="lab6-publish-btn">Publish</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top:20px;"><i class="fa-solid fa-list"></i> Audit Trail</h4>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; text-align: left; border-collapse: collapse; margin-top: 10px;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <th style="padding: 8px;">Node</th>
+                                    <th style="padding: 8px;">Action</th>
+                                    <th style="padding: 8px;">Status</th>
+                                    <th style="padding: 8px;">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lab6-audit-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: SWARM BATCH (LAB 8) -->
+            <section id="lab8-tab" class="tab-pane">
+                <div class="grid-layout">
+                    <div class="glass-card config-panel">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-network-wired"></i> Batch Run</h3>
+                        </div>
+                        <form id="lab8-form">
+                            <div class="form-group">
+                                <label>Select Students (Comma-separated IDs)</label>
+                                <input type="text" id="lab8-student-ids" class="input-control" placeholder="student_001, student_002" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Target Role</label>
+                                <select id="lab8-target-role" class="input-control" required>
+                                    <option value="Software Engineer">Software Engineer</option>
+                                    <option value="Data Analyst">Data Analyst</option>
+                                    <option value="ML Engineer">ML Engineer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" id="lab8-run-btn">
+                                <i class="fa-solid fa-play"></i> Start Parallel Swarm
+                            </button>
+                        </form>
+                    </div>
+                    <div class="glass-card result-panel">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-cubes"></i> Swarm Status</h3>
+                            <span class="pill-tag" id="lab8-batch-id">Batch: --</span>
+                        </div>
+                        <div class="detail-grid" style="margin-top: 15px;">
+                            <div class="info-card">
+                                <h4>Successful (<span id="lab8-succ-count">0</span>)</h4>
+                                <ul id="lab8-succ-list" class="badge-list"></ul>
+                            </div>
+                            <div class="info-card">
+                                <h4>Failed (<span id="lab8-fail-count">0</span>)</h4>
+                                <ul id="lab8-fail-list" class="badge-list"></ul>
+                            </div>
+                            <div class="info-card">
+                                <h4>Pending Appr. (<span id="lab8-pend-count">0</span>)</h4>
+                                <ul id="lab8-pend-list" class="badge-list"></ul>
+                            </div>
+                            <div class="info-card">
+                                <h4>Metrics</h4>
+                                <pre id="lab8-metrics" class="json-display" style="font-size:0.8rem; background:var(--bg-elevated); padding:10px; border-radius:6px;"></pre>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 

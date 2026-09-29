@@ -115,7 +115,7 @@ class TestConnectorAuthorization:
             connector.search_students(["python"])
 
     def test_student_cannot_view_placement_history(self, student_001_ctx: AccessContext):
-        """A student must NOT access full placement history."""
+        """A student must NOT access full Move to RetrievalStore."""
         connector = PlacementConnector(student_001_ctx)
         with pytest.raises(UnauthorizedAccessError):
             connector.get_placement_history()

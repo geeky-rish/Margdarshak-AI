@@ -1,0 +1,167 @@
+{
+  "checkpoint_id": "cp_c232fc9bfd1e",
+  "run_id": "run_1994c33d",
+  "batch_id": "batch_53745cb7",
+  "student_id": "student_003",
+  "timestamp": "2026-09-29T04:58:55.659303+00:00",
+  "node": "coding_analytics_agent",
+  "state_snapshot": {
+    "run_id": "run_1994c33d",
+    "batch_id": "batch_53745cb7",
+    "student_id": "student_003",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_003",
+      "name": "Rohan Das",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "skills": {
+        "Python": "advanced",
+        "Machine Learning": "intermediate",
+        "Deep Learning": "intermediate",
+        "TensorFlow": "intermediate",
+        "SQL": "intermediate",
+        "DSA": "intermediate",
+        "Statistics": "intermediate"
+      },
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "coding_stats": {
+        "problems_solved": 180,
+        "contest_rating": 1320
+      }
+    },
+    "resume_summary": {
+      "name": "Rohan Das",
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "top_skills": [
+        "Python (advanced)",
+        "Machine Learning (intermediate)",
+        "Deep Learning (intermediate)",
+        "TensorFlow (intermediate)",
+        "SQL (intermediate)",
+        "DSA (intermediate)",
+        "Statistics (intermediate)"
+      ],
+      "weak_skills": [],
+      "projects_count": 3,
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "problems_solved": 180,
+      "contest_rating": 1320,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [
+        {
+          "skill": "DSA",
+          "level": "intermediate",
+          "status": "met"
+        }
+      ],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "skill_gaps": [
+        {
+          "skill": "Java",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "DBMS",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        }
+      ],
+      "coverage_score": 15.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {
+      "coding_score": 34.4,
+      "project_score": 100.0,
+      "problem_solving_trend": "moderate",
+      "contest_trend": "moderate",
+      "project_trend": "strong",
+      "dsa_score": 55.0,
+      "aptitude_score": 68.0,
+      "communication_score": 60.0,
+      "mock_interview_score": 63.0,
+      "summary": "Coding: 34.4/100 | Projects: 100.0/100 | DSA Assessment: 55.0/100"
+    },
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent",
+      "coding_analytics_agent"
+    ],
+    "checkpoint_id": "cp_df85792ea6bf",
+    "current_node": "coding_analytics_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Rohan Das (student_003)",
+      "Skill gap analysis: 1 met, 4 gaps, coverage=15.0%",
+      "Coding analytics: score=34.4, projects=100.0, problems=180"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent",
+    "coding_analytics_agent"
+  ],
+  "status": "valid"
+}

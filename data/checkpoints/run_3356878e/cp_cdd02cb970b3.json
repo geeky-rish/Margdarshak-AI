@@ -1,0 +1,95 @@
+{
+  "checkpoint_id": "cp_cdd02cb970b3",
+  "run_id": "run_3356878e",
+  "batch_id": null,
+  "student_id": "student_001",
+  "timestamp": "2026-09-29T04:58:54.388913+00:00",
+  "node": "resume_agent",
+  "state_snapshot": {
+    "run_id": "run_3356878e",
+    "batch_id": null,
+    "student_id": "student_001",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_001",
+      "name": "Arjun Mehta",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.4,
+      "skills": {
+        "DSA": "intermediate",
+        "Java": "intermediate",
+        "Python": "beginner",
+        "SQL": "intermediate",
+        "DBMS": "beginner",
+        "Operating Systems": "beginner",
+        "Computer Networks": "beginner"
+      },
+      "projects": [
+        "Data pipeline using Apache Spark",
+        "AI-based resume parser"
+      ],
+      "coding_stats": {
+        "problems_solved": 250,
+        "contest_rating": 1450
+      }
+    },
+    "resume_summary": {
+      "name": "Arjun Mehta",
+      "branch": "Computer Science",
+      "cgpa": 8.4,
+      "top_skills": [
+        "DSA (intermediate)",
+        "Java (intermediate)",
+        "SQL (intermediate)"
+      ],
+      "weak_skills": [
+        "Python",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Data pipeline using Apache Spark",
+        "AI-based resume parser"
+      ],
+      "problems_solved": 250,
+      "contest_rating": 1450,
+      "completeness": "complete"
+    },
+    "skill_gap": {},
+    "coding_analytics": {},
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent"
+    ],
+    "checkpoint_id": "cp_4332f3a0c5e4",
+    "current_node": "resume_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Arjun Mehta (student_001)"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent"
+  ],
+  "status": "valid"
+}

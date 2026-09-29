@@ -1,0 +1,152 @@
+{
+  "checkpoint_id": "cp_a4a62704e0df",
+  "run_id": "run_a4d144ad",
+  "batch_id": "batch_559bcb00",
+  "student_id": "student_002",
+  "timestamp": "2026-09-29T04:58:56.364417+00:00",
+  "node": "skill_gap_agent",
+  "state_snapshot": {
+    "run_id": "run_a4d144ad",
+    "batch_id": "batch_559bcb00",
+    "student_id": "student_002",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_002",
+      "name": "Priya Sharma",
+      "consent": true,
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "skills": {
+        "Python": "advanced",
+        "SQL": "advanced",
+        "Statistics": "intermediate",
+        "Excel": "intermediate",
+        "Tableau": "beginner",
+        "Machine Learning": "beginner",
+        "DSA": "beginner"
+      },
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "coding_stats": {
+        "problems_solved": 120,
+        "contest_rating": 1100
+      }
+    },
+    "resume_summary": {
+      "name": "Priya Sharma",
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "top_skills": [
+        "Python (advanced)",
+        "SQL (advanced)",
+        "Statistics (intermediate)",
+        "Excel (intermediate)"
+      ],
+      "weak_skills": [
+        "Tableau",
+        "Machine Learning",
+        "DSA"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "problems_solved": 120,
+      "contest_rating": 1100,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "skill_gaps": [
+        {
+          "skill": "DSA",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        },
+        {
+          "skill": "Java",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "DBMS",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        }
+      ],
+      "coverage_score": 8.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {},
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent"
+    ],
+    "checkpoint_id": "cp_fbf5ac2456cf",
+    "current_node": "skill_gap_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Priya Sharma (student_002)",
+      "Skill gap analysis: 0 met, 5 gaps, coverage=8.0%"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent"
+  ],
+  "status": "valid"
+}

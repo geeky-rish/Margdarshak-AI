@@ -1,0 +1,96 @@
+{
+  "checkpoint_id": "cp_c397029f9c7c",
+  "run_id": "run_81ebc55b",
+  "batch_id": "batch_25d0667a",
+  "student_id": "student_003",
+  "timestamp": "2026-09-29T04:58:18.147645+00:00",
+  "node": "resume_agent",
+  "state_snapshot": {
+    "run_id": "run_81ebc55b",
+    "batch_id": "batch_25d0667a",
+    "student_id": "student_003",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_003",
+      "name": "Rohan Das",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "skills": {
+        "Python": "advanced",
+        "Machine Learning": "intermediate",
+        "Deep Learning": "intermediate",
+        "TensorFlow": "intermediate",
+        "SQL": "intermediate",
+        "DSA": "intermediate",
+        "Statistics": "intermediate"
+      },
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "coding_stats": {
+        "problems_solved": 180,
+        "contest_rating": 1320
+      }
+    },
+    "resume_summary": {
+      "name": "Rohan Das",
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "top_skills": [
+        "Python (advanced)",
+        "Machine Learning (intermediate)",
+        "Deep Learning (intermediate)",
+        "TensorFlow (intermediate)",
+        "SQL (intermediate)",
+        "DSA (intermediate)",
+        "Statistics (intermediate)"
+      ],
+      "weak_skills": [],
+      "projects_count": 3,
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "problems_solved": 180,
+      "contest_rating": 1320,
+      "completeness": "complete"
+    },
+    "skill_gap": {},
+    "coding_analytics": {},
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent"
+    ],
+    "checkpoint_id": "cp_43f6631dd6cf",
+    "current_node": "resume_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Rohan Das (student_003)"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent"
+  ],
+  "status": "valid"
+}

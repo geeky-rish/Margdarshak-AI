@@ -1,0 +1,377 @@
+{
+  "checkpoint_id": "cp_f59b6243617f",
+  "run_id": "run_5c625fc3",
+  "batch_id": "batch_7dec2ce7",
+  "student_id": "student_002",
+  "timestamp": "2026-09-29T05:00:04.812902+00:00",
+  "node": "assemble_plan",
+  "state_snapshot": {
+    "run_id": "run_5c625fc3",
+    "batch_id": "batch_7dec2ce7",
+    "student_id": "student_002",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": {
+      "plan_id": "plan_fcd42ae0",
+      "student_id": "student_002",
+      "target_role": "Software Engineer",
+      "target_companies": [],
+      "focus_areas": [],
+      "steps": [
+        "Retrieve student profile via PlacementConnector.",
+        "Retrieve target role requirements via PlacementConnector.",
+        "Retrieve student skill assessment via PlacementConnector.",
+        "Validate profile and role inputs.",
+        "Calculate deterministic readiness scores (skill coverage, coding, projects).",
+        "Identify skill gaps and strengths.",
+        "Retrieve historically similar student cases from long-term memory.",
+        "Construct a structured ReadinessPlan.",
+        "Format the final placement readiness report via FormatSkill."
+      ],
+      "status": "locked"
+    },
+    "profile": {
+      "student_id": "student_002",
+      "name": "Priya Sharma",
+      "consent": true,
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "skills": {
+        "Python": "advanced",
+        "SQL": "advanced",
+        "Statistics": "intermediate",
+        "Excel": "intermediate",
+        "Tableau": "beginner",
+        "Machine Learning": "beginner",
+        "DSA": "beginner"
+      },
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "coding_stats": {
+        "problems_solved": 120,
+        "contest_rating": 1100
+      }
+    },
+    "resume_summary": {
+      "name": "Priya Sharma",
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "top_skills": [
+        "Python (advanced)",
+        "SQL (advanced)",
+        "Statistics (intermediate)",
+        "Excel (intermediate)"
+      ],
+      "weak_skills": [
+        "Tableau",
+        "Machine Learning",
+        "DSA"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "problems_solved": 120,
+      "contest_rating": 1100,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "skill_gaps": [
+        {
+          "skill": "DSA",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        },
+        {
+          "skill": "Java",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "DBMS",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        }
+      ],
+      "coverage_score": 8.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {
+      "coding_score": 18.4,
+      "project_score": 66.67,
+      "problem_solving_trend": "needs_improvement",
+      "contest_trend": "needs_improvement",
+      "project_trend": "moderate",
+      "dsa_score": 40.0,
+      "aptitude_score": 78.0,
+      "communication_score": 85.0,
+      "mock_interview_score": 72.0,
+      "summary": "Coding: 18.4/100 | Projects: 66.7/100 | DSA Assessment: 40.0/100"
+    },
+    "company_matches": [
+      {
+        "company": "TCS",
+        "role": "Software Engineer",
+        "readiness_score": 22.85,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DSA",
+          "Java",
+          "DBMS"
+        ]
+      },
+      {
+        "company": "Infosys",
+        "role": "Software Engineer",
+        "readiness_score": 22.85,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DSA",
+          "Java",
+          "DBMS"
+        ]
+      },
+      {
+        "company": "Wipro",
+        "role": "Software Engineer",
+        "readiness_score": 22.85,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DSA",
+          "Java",
+          "DBMS"
+        ]
+      },
+      {
+        "company": "Accenture",
+        "role": "Software Engineer",
+        "readiness_score": 22.85,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DSA",
+          "Java",
+          "DBMS"
+        ]
+      },
+      {
+        "company": "Capgemini",
+        "role": "Software Engineer",
+        "readiness_score": 22.85,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DSA",
+          "Java",
+          "DBMS"
+        ]
+      },
+      {
+        "company": "HCL",
+        "role": "Software Engineer",
+        "readiness_score": 22.85,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DSA",
+          "Java",
+          "DBMS"
+        ]
+      }
+    ],
+    "placement_score": 22.85,
+    "match_confidence": 0.79,
+    "match_reasoning": "Score 22.9 is below minimum threshold 70.0 for Software Engineer. Gaps: DSA, Java, DBMS.",
+    "interview_results": {
+      "focus_areas": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "recommended_practice": [
+        "Practice DSA problems",
+        "Practice Java problems",
+        "Practice DBMS problems"
+      ],
+      "communication_note": "Strong",
+      "ai_generated": true,
+      "disclaimer": "This roadmap is AI-generated based on identified gaps. Consult with your mentor for personalised guidance."
+    },
+    "learning_roadmap": [
+      "[CRITICAL] Learn Java \u2014 required for Software Engineer. Recommended: structured course + hands-on projects.",
+      "[CRITICAL] Learn DBMS \u2014 required for Software Engineer. Recommended: structured course + hands-on projects.",
+      "[CRITICAL] Learn Operating Systems \u2014 required for Software Engineer. Recommended: structured course + hands-on projects.",
+      "[IMPROVE] Strengthen DSA from beginner to intermediate+. Practice through targeted exercises.",
+      "[CODING] Increase DSA practice: target 300+ problems solved and regular contest participation.",
+      "[INTERVIEW] Schedule mock interview with Placement Cell for personalised feedback."
+    ],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent",
+      "coding_analytics_agent",
+      "job_matching_agent",
+      "interview_agent",
+      "assemble_plan"
+    ],
+    "checkpoint_id": "cp_0bd0a35d06de",
+    "current_node": "assemble_plan",
+    "readiness_analysis": {
+      "student_id": "student_002",
+      "target_role": "Software Engineer",
+      "skill_coverage_score": 8.0,
+      "coding_score": 18.4,
+      "project_score": 66.67,
+      "overall_readiness_score": 22.85,
+      "strengths": [],
+      "skill_gaps": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "meets_minimum_threshold": false
+    },
+    "final_report": {
+      "student_name": "Priya Sharma",
+      "student_id": "student_002",
+      "target_role": "Software Engineer",
+      "overall_readiness_score": 22.85,
+      "meets_threshold": false,
+      "strengths": [],
+      "skill_gaps": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "coding_signals": {
+        "coding_score": 18.4,
+        "skill_coverage_score": 8.0,
+        "project_score": 66.67,
+        "overall_readiness_score": 22.85
+      },
+      "recommended_steps": [
+        "Focus on improving missing/weak skills: DSA, Java, DBMS.",
+        "Also address: Operating Systems, Computer Networks.",
+        "Increase DSA practice \u2014 target 300+ problems solved and a contest rating above 1500.",
+        "Build at least one more end-to-end project relevant to the 'Software Engineer' role and publish it on GitHub.",
+        "Schedule a mock interview with the Placement Cell for personalised feedback."
+      ],
+      "historical_similar_cases": [
+        {
+          "case_id": "case_003",
+          "student_id": "hist_003",
+          "target_role": "Data Analyst",
+          "readiness_score": 81.0,
+          "outcome": "placed",
+          "summary": "Student with strong SQL and analytical tools placed at Deloitte. Excellent communication was a key differentiator.",
+          "tags": [
+            "data_analyst",
+            "sql",
+            "python",
+            "statistics",
+            "placed",
+            "analytics"
+          ]
+        },
+        {
+          "case_id": "case_002",
+          "student_id": "hist_002",
+          "target_role": "Software Engineer",
+          "readiness_score": 52.0,
+          "outcome": "not_placed",
+          "summary": "Student with weak DSA and missing core CS fundamentals did not clear technical rounds. Required 3 more months of prep.",
+          "tags": [
+            "software_engineer",
+            "java",
+            "dsa",
+            "not_placed",
+            "weak_fundamentals"
+          ]
+        },
+        {
+          "case_id": "case_007",
+          "student_id": "hist_007",
+          "target_role": "Software Engineer",
+          "readiness_score": 88.0,
+          "outcome": "placed",
+          "summary": "Student with strong DSA and complete CS fundamentals placed at Accenture. High contest rating (1700+) was decisive.",
+          "tags": [
+            "software_engineer",
+            "java",
+            "dsa",
+            "placed",
+            "cs_fundamentals",
+            "strong_candidate"
+          ]
+        }
+      ],
+      "plan_id": "plan_fcd42ae0",
+      "ai_summary": null,
+      "report_text": "[truncated]"
+    },
+    "evidence": [
+      "Profile loaded for Priya Sharma (student_002)",
+      "Skill gap analysis: 0 met, 5 gaps, coverage=8.0%",
+      "Coding analytics: score=18.4, projects=66.7, problems=120",
+      "Job matching: score=22.9, confidence=0.79, threshold_met=False",
+      "Interview prep: 6 roadmap items generated from 5 skill gaps"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent",
+    "coding_analytics_agent",
+    "job_matching_agent",
+    "interview_agent",
+    "assemble_plan"
+  ],
+  "status": "valid"
+}

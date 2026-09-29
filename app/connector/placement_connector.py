@@ -243,7 +243,7 @@ class PlacementConnector:
         raise KeyError(f"Skill assessment for '{student_id}' not found.")
 
     # ------------------------------------------------------------------
-    # Placement history (read-only; write happens via retrieval_store)
+    # Move to RetrievalStore (read-only; write happens via retrieval_store)
     # ------------------------------------------------------------------
 
     def get_placement_history(self) -> list[dict[str, Any]]:
@@ -254,6 +254,6 @@ class PlacementConnector:
         """
         if self._ctx.actor_role == "student":
             raise UnauthorizedAccessError(
-                "Students are not authorised to view full placement history."
+                "Students are not authorised to view full Move to RetrievalStore."
             )
         return _load_json("placement_history.json")

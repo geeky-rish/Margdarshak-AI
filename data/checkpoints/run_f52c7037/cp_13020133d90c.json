@@ -1,0 +1,270 @@
+{
+  "checkpoint_id": "cp_13020133d90c",
+  "run_id": "run_f52c7037",
+  "batch_id": null,
+  "student_id": "student_001",
+  "timestamp": "2026-09-29T04:58:54.047419+00:00",
+  "node": "interview_agent",
+  "state_snapshot": {
+    "run_id": "run_f52c7037",
+    "batch_id": null,
+    "student_id": "student_001",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_001",
+      "name": "Arjun Mehta",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.4,
+      "skills": {
+        "DSA": "intermediate",
+        "Java": "intermediate",
+        "Python": "beginner",
+        "SQL": "intermediate",
+        "DBMS": "beginner",
+        "Operating Systems": "beginner",
+        "Computer Networks": "beginner"
+      },
+      "projects": [
+        "Data pipeline using Apache Spark",
+        "AI-based resume parser"
+      ],
+      "coding_stats": {
+        "problems_solved": 250,
+        "contest_rating": 1450
+      }
+    },
+    "resume_summary": {
+      "name": "Arjun Mehta",
+      "branch": "Computer Science",
+      "cgpa": 8.4,
+      "top_skills": [
+        "DSA (intermediate)",
+        "Java (intermediate)",
+        "SQL (intermediate)"
+      ],
+      "weak_skills": [
+        "Python",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Data pipeline using Apache Spark",
+        "AI-based resume parser"
+      ],
+      "problems_solved": 250,
+      "contest_rating": 1450,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [
+        {
+          "skill": "DSA",
+          "level": "intermediate",
+          "status": "met"
+        },
+        {
+          "skill": "Java",
+          "level": "intermediate",
+          "status": "met"
+        }
+      ],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [],
+      "skill_gaps": [
+        {
+          "skill": "DBMS",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        }
+      ],
+      "coverage_score": 54.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {
+      "coding_score": 48.0,
+      "project_score": 66.67,
+      "problem_solving_trend": "moderate",
+      "contest_trend": "moderate",
+      "project_trend": "moderate",
+      "dsa_score": 62.0,
+      "aptitude_score": 70.0,
+      "communication_score": 65.0,
+      "mock_interview_score": 58.0,
+      "summary": "Coding: 48.0/100 | Projects: 66.7/100 | DSA Assessment: 62.0/100"
+    },
+    "company_matches": [
+      {
+        "company": "TCS",
+        "role": "Software Engineer",
+        "readiness_score": 54.73,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DBMS",
+          "Operating Systems",
+          "Computer Networks"
+        ]
+      },
+      {
+        "company": "Infosys",
+        "role": "Software Engineer",
+        "readiness_score": 54.73,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DBMS",
+          "Operating Systems",
+          "Computer Networks"
+        ]
+      },
+      {
+        "company": "Wipro",
+        "role": "Software Engineer",
+        "readiness_score": 54.73,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DBMS",
+          "Operating Systems",
+          "Computer Networks"
+        ]
+      },
+      {
+        "company": "Accenture",
+        "role": "Software Engineer",
+        "readiness_score": 54.73,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DBMS",
+          "Operating Systems",
+          "Computer Networks"
+        ]
+      },
+      {
+        "company": "Capgemini",
+        "role": "Software Engineer",
+        "readiness_score": 54.73,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DBMS",
+          "Operating Systems",
+          "Computer Networks"
+        ]
+      },
+      {
+        "company": "HCL",
+        "role": "Software Engineer",
+        "readiness_score": 54.73,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "DBMS",
+          "Operating Systems",
+          "Computer Networks"
+        ]
+      }
+    ],
+    "placement_score": 54.73,
+    "match_confidence": 0.45,
+    "match_reasoning": "Score 54.7 is below minimum threshold 70.0 for Software Engineer. Strengths: DSA (intermediate), Java (intermediate). Gaps: DBMS, Operating Systems, Computer Networks. LOW CONFIDENCE \u2014 routing for human review.",
+    "interview_results": {
+      "focus_areas": [
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "recommended_practice": [
+        "Practice DBMS problems",
+        "Practice Operating Systems problems",
+        "Practice Computer Networks problems"
+      ],
+      "communication_note": "Needs improvement \u2014 practice structured responses",
+      "ai_generated": true,
+      "disclaimer": "This roadmap is AI-generated based on identified gaps. Consult with your mentor for personalised guidance."
+    },
+    "learning_roadmap": [
+      "[IMPROVE] Strengthen DBMS from beginner to intermediate+. Practice through targeted exercises.",
+      "[IMPROVE] Strengthen Operating Systems from beginner to intermediate+. Practice through targeted exercises.",
+      "[IMPROVE] Strengthen Computer Networks from beginner to intermediate+. Practice through targeted exercises.",
+      "[CODING] Maintain coding practice; participate in weekly contests to improve rating above 1500.",
+      "[INTERVIEW] Schedule mock interview with Placement Cell for personalised feedback."
+    ],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent",
+      "coding_analytics_agent",
+      "job_matching_agent",
+      "interview_agent"
+    ],
+    "checkpoint_id": "cp_415f33ea33db",
+    "current_node": "interview_agent",
+    "readiness_analysis": {
+      "student_id": "student_001",
+      "target_role": "Software Engineer",
+      "skill_coverage_score": 54.0,
+      "coding_score": 48.0,
+      "project_score": 66.67,
+      "overall_readiness_score": 54.73,
+      "strengths": [
+        "DSA (intermediate)",
+        "Java (intermediate)"
+      ],
+      "skill_gaps": [
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "meets_minimum_threshold": false
+    },
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Arjun Mehta (student_001)",
+      "Skill gap analysis: 2 met, 3 gaps, coverage=54.0%",
+      "Coding analytics: score=48.0, projects=66.7, problems=250",
+      "Job matching: score=54.7, confidence=0.45, threshold_met=False",
+      "Interview prep: 5 roadmap items generated from 3 skill gaps"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent",
+    "coding_analytics_agent",
+    "job_matching_agent",
+    "interview_agent"
+  ],
+  "status": "valid"
+}

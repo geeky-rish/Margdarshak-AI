@@ -1,0 +1,211 @@
+{
+  "checkpoint_id": "cp_2aec97716ff8",
+  "run_id": "run_a959a004",
+  "batch_id": null,
+  "student_id": "student_002",
+  "timestamp": "2026-09-29T05:00:04.044014+00:00",
+  "node": "job_matching_agent",
+  "state_snapshot": {
+    "run_id": "run_a959a004",
+    "batch_id": null,
+    "student_id": "student_002",
+    "consent": true,
+    "target_role": "Data Analyst",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_002",
+      "name": "Priya Sharma",
+      "consent": true,
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "skills": {
+        "Python": "advanced",
+        "SQL": "advanced",
+        "Statistics": "intermediate",
+        "Excel": "intermediate",
+        "Tableau": "beginner",
+        "Machine Learning": "beginner",
+        "DSA": "beginner"
+      },
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "coding_stats": {
+        "problems_solved": 120,
+        "contest_rating": 1100
+      }
+    },
+    "resume_summary": {
+      "name": "Priya Sharma",
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "top_skills": [
+        "Python (advanced)",
+        "SQL (advanced)",
+        "Statistics (intermediate)",
+        "Excel (intermediate)"
+      ],
+      "weak_skills": [
+        "Tableau",
+        "Machine Learning",
+        "DSA"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "problems_solved": 120,
+      "contest_rating": 1100,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [
+        {
+          "skill": "SQL",
+          "level": "advanced",
+          "status": "met"
+        },
+        {
+          "skill": "Python",
+          "level": "advanced",
+          "status": "met"
+        },
+        {
+          "skill": "Statistics",
+          "level": "intermediate",
+          "status": "met"
+        },
+        {
+          "skill": "Excel",
+          "level": "intermediate",
+          "status": "met"
+        }
+      ],
+      "required_skills": [
+        "SQL",
+        "Python",
+        "Statistics",
+        "Excel"
+      ],
+      "missing_skills": [],
+      "skill_gaps": [],
+      "coverage_score": 87.5,
+      "benchmark_source": "Role requirements: Data Analyst",
+      "preferred_skills": [
+        "Tableau",
+        "Power BI",
+        "Machine Learning"
+      ]
+    },
+    "coding_analytics": {
+      "coding_score": 18.4,
+      "project_score": 66.67,
+      "problem_solving_trend": "needs_improvement",
+      "contest_trend": "needs_improvement",
+      "project_trend": "moderate",
+      "dsa_score": 40.0,
+      "aptitude_score": 78.0,
+      "communication_score": 85.0,
+      "mock_interview_score": 72.0,
+      "summary": "Coding: 18.4/100 | Projects: 66.7/100 | DSA Assessment: 40.0/100"
+    },
+    "company_matches": [
+      {
+        "company": "Deloitte",
+        "role": "Data Analyst",
+        "readiness_score": 62.6,
+        "meets_threshold": true,
+        "gaps_to_close": []
+      },
+      {
+        "company": "EY",
+        "role": "Data Analyst",
+        "readiness_score": 62.6,
+        "meets_threshold": true,
+        "gaps_to_close": []
+      },
+      {
+        "company": "PwC",
+        "role": "Data Analyst",
+        "readiness_score": 62.6,
+        "meets_threshold": true,
+        "gaps_to_close": []
+      },
+      {
+        "company": "KPMG",
+        "role": "Data Analyst",
+        "readiness_score": 62.6,
+        "meets_threshold": true,
+        "gaps_to_close": []
+      },
+      {
+        "company": "Amazon",
+        "role": "Data Analyst",
+        "readiness_score": 62.6,
+        "meets_threshold": true,
+        "gaps_to_close": []
+      },
+      {
+        "company": "Flipkart",
+        "role": "Data Analyst",
+        "readiness_score": 62.6,
+        "meets_threshold": true,
+        "gaps_to_close": []
+      }
+    ],
+    "placement_score": 62.6,
+    "match_confidence": 0.54,
+    "match_reasoning": "Score 62.6 meets minimum threshold 60.0 for Data Analyst. Strengths: SQL (advanced), Python (advanced), Statistics (intermediate).",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent",
+      "coding_analytics_agent",
+      "job_matching_agent"
+    ],
+    "checkpoint_id": "cp_181f070e3092",
+    "current_node": "job_matching_agent",
+    "readiness_analysis": {
+      "student_id": "student_002",
+      "target_role": "Data Analyst",
+      "skill_coverage_score": 87.5,
+      "coding_score": 18.4,
+      "project_score": 66.67,
+      "overall_readiness_score": 62.6,
+      "strengths": [
+        "SQL (advanced)",
+        "Python (advanced)",
+        "Statistics (intermediate)",
+        "Excel (intermediate)"
+      ],
+      "skill_gaps": [],
+      "meets_minimum_threshold": true
+    },
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Priya Sharma (student_002)",
+      "Skill gap analysis: 4 met, 0 gaps, coverage=87.5%",
+      "Coding analytics: score=18.4, projects=66.7, problems=120",
+      "Job matching: score=62.6, confidence=0.54, threshold_met=True"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent",
+    "coding_analytics_agent",
+    "job_matching_agent"
+  ],
+  "status": "valid"
+}

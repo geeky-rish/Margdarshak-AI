@@ -35,15 +35,19 @@ from app.memory.retrieval_store import RetrievalStore
 from app.models.schemas import (
     AccessContext,
     AnalyzeRequest,
+    ApprovalRequest,
+    BatchRunRequest,
     ClarificationResponse,
     ClarifiedRequest,
     ClarifyRequest,
     CreateStudentRequest,
+    GraphState,
     HealthResponse,
     PlanRequest,
     ReadinessAnalysis,
     ReadinessPlan,
     ReadinessReport,
+    ReviseRequest,
     RunRequest,
     SimilarStudentsRequest,
     StudentProfile,
@@ -62,9 +66,9 @@ app = FastAPI(
     title="Placement Readiness & Career Intelligence Portal",
     description=(
         "An agentic AI system that provides deterministic placement readiness "
-        "analysis for students. Labs 1–5 implemented."
+        "analysis for students. Labs 1–8 implemented."
     ),
-    version="1.0.0",
+    version="2.0.0",
 )
 
 app.add_middleware(
@@ -295,3 +299,212 @@ def run_workflow(body: RunRequest, x_gemini_api_key: Optional[str] = Header(None
         raise HTTPException(status_code=403, detail=str(e))
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
+
+
+# ---------------------------------------------------------------------------
+# Lab 7 — Graph pipeline runs
+# ---------------------------------------------------------------------------
+
+
+@app.post("/runs", tags=["Lab 7 — Graph Pipeline"])
+def create_graph_run(body: RunRequest, x_gemini_api_key: Optional[str] = Header(None)) -> dict:
+    """
+    Execute the complete Lab 7 agentic node graph pipeline.
+
+    Returns the graph state including readiness analysis, validation,
+    and approval status.
+    """
+    try:
+        context = AccessContext(actor_id=body.actor_id, actor_role=body.actor_role)
+        state = _coordinator.run_graph(
+            student_id=body.student_id,
+            target_role=body.target_role,
+            context=context,
+            target_companies=body.target_companies,
+            focus_areas=body.focus_areas,
+            api_key=x_gemini_api_key,
+        )
+        return {
+            "run_id": state.run_id,
+            "student_id": state.student_id,
+            "status": state.status,
+            "approval_status": state.approval_status,
+            "placement_score": state.placement_score,
+            "match_confidence": state.match_confidence,
+            "completed_nodes": state.completed_nodes,
+            "errors": state.errors,
+            "report": state.final_report.model_dump() if state.final_report else None,
+            "report_text": state.final_report.to_text() if state.final_report else "",
+        }
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except UnauthorizedAccessError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+
+@app.post("/runs/{run_id}/resume", tags=["Lab 7 — Graph Pipeline"])
+def resume_graph_run(run_id: str, body: RunRequest, x_gemini_api_key: Optional[str] = Header(None)) -> dict:
+    """Resume a graph run from its latest checkpoint."""
+    try:
+        context = AccessContext(actor_id=body.actor_id, actor_role=body.actor_role)
+        state = _coordinator.run_graph(
+            student_id=body.student_id,
+            target_role=body.target_role,
+            context=context,
+            target_companies=body.target_companies,
+            focus_areas=body.focus_areas,
+            api_key=x_gemini_api_key,
+            resume_from_run_id=run_id,
+        )
+        return {
+            "run_id": state.run_id,
+            "status": state.status,
+            "approval_status": state.approval_status,
+            "completed_nodes": state.completed_nodes,
+        }
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.get("/runs/{run_id}", tags=["Lab 7 — Graph Pipeline"])
+def get_run_status(run_id: str) -> dict:
+    """Get the current status and state of a graph run."""
+    state = _coordinator.get_graph_run(run_id)
+    if state is None:
+        raise HTTPException(status_code=404, detail=f"Run '{run_id}' not found.")
+    return {
+        "run_id": state.run_id,
+        "student_id": state.student_id,
+        "status": state.status,
+        "approval_status": state.approval_status,
+        "placement_score": state.placement_score,
+        "match_confidence": state.match_confidence,
+        "current_node": state.current_node,
+        "completed_nodes": state.completed_nodes,
+        "errors": state.errors,
+        "skill_gap": state.skill_gap,
+        "coding_analytics": state.coding_analytics,
+        "company_matches": state.company_matches,
+        "learning_roadmap": state.learning_roadmap,
+        "validation_report": state.validation_report.model_dump() if state.validation_report else None,
+    }
+
+
+@app.get("/runs/{run_id}/audit", tags=["Lab 6 — Runtime"])
+def get_run_audit(run_id: str) -> dict:
+    """Get the audit trail for a run."""
+    events = _coordinator.get_run_audit(run_id)
+    return {
+        "run_id": run_id,
+        "event_count": len(events),
+        "events": [e.model_dump() for e in events],
+    }
+
+
+@app.post("/runs/{run_id}/approve", tags=["Lab 7 — Approval Gate"])
+def approve_run(run_id: str, body: ApprovalRequest) -> dict:
+    """
+    Submit a human approval decision for a run.
+
+    Decisions: approved, rejected, edit_requested, override.
+    Only placement officers/mentors may approve.
+    """
+    try:
+        state = _coordinator.approve_run(
+            run_id=run_id,
+            reviewer_id=body.reviewer_id,
+            decision=body.decision,
+            comments=body.comments,
+        )
+        return {
+            "run_id": state.run_id,
+            "student_id": state.student_id,
+            "approval_status": state.approval_status,
+            "status": state.status,
+            "reviewer_feedback": state.reviewer_feedback,
+        }
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+
+@app.post("/runs/{run_id}/publish", tags=["Lab 7 — Governed Publish"])
+def publish_run(run_id: str) -> dict:
+    """Publish approved results. Only works if the run has been approved."""
+    try:
+        state = _coordinator.publish_run(run_id)
+        return {
+            "run_id": state.run_id,
+            "student_id": state.student_id,
+            "status": state.status,
+            "approval_status": state.approval_status,
+        }
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+
+@app.post("/runs/{run_id}/revise", tags=["Lab 7 — Approval Gate"])
+def revise_run(run_id: str, body: ReviseRequest) -> dict:
+    """Request revision on a run that was edit_requested."""
+    try:
+        state = _coordinator.approve_run(
+            run_id=run_id,
+            reviewer_id=body.reviewer_id,
+            decision="edit_requested",
+            comments=body.feedback,
+        )
+        return {
+            "run_id": state.run_id,
+            "approval_status": state.approval_status,
+            "status": state.status,
+        }
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
+
+# ---------------------------------------------------------------------------
+# Lab 8 — Batch / Swarm
+# ---------------------------------------------------------------------------
+
+
+@app.post("/batch-runs", tags=["Lab 8 — Parallel Swarm"])
+def create_batch_run(body: BatchRunRequest, x_gemini_api_key: Optional[str] = Header(None)) -> dict:
+    """
+    Execute the placement pipeline for multiple students concurrently.
+
+    Each student gets independent state, audit, and validation.
+    Failures are isolated — one student's error doesn't affect others.
+    """
+    try:
+        context = AccessContext(actor_id=body.actor_id, actor_role=body.actor_role)
+        result = _coordinator.run_batch(
+            student_ids=body.student_ids,
+            target_role=body.target_role,
+            context=context,
+            target_companies=body.target_companies,
+            focus_areas=body.focus_areas,
+            api_key=x_gemini_api_key,
+            max_concurrency=body.max_concurrency,
+        )
+        return result.model_dump()
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except UnauthorizedAccessError as e:
+        raise HTTPException(status_code=403, detail=str(e))
+
+
+@app.get("/batch-runs/{batch_id}", tags=["Lab 8 — Parallel Swarm"])
+def get_batch_status(batch_id: str) -> dict:
+    """Get the status and results of a batch run."""
+    result = _coordinator.get_batch_result(batch_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail=f"Batch '{batch_id}' not found.")
+    return result.model_dump()
+

@@ -20,7 +20,7 @@ Created & Developed by **Rishi Kulkarni**
 - 🎨 **Modern Web Portal**: Glassmorphism dark theme interface with live circular score gauges, real-time student registration, interactive agent chat, and vector memory visualization.
 - 🛡️ **Governed Data Access (`PlacementConnector`)**: Enforces strict role-based access control (`student`, `placement_officer`, `system`).
 - 🧠 **ChromaDB Long-Term Vector Memory (`RetrievalStore`)**: Retrieves historically similar student placement cases using semantic search to provide realistic benchmark insights.
-- ⚡ **100% Fail-Proof Fallback Engine**: Seamlessly falls back to deterministic heuristic algorithms if LLM quotas are exceeded or network connectivity is offline.
+- ⚡ **100% deterministic fallback Fallback Engine**: Seamlessly falls back to deterministic heuristic algorithms if LLM quotas are exceeded or network connectivity is offline.
 
 ---
 
@@ -108,12 +108,15 @@ Margdarshak-AI/
 │   ├── skill_assessments.json
 │   └── placement_history.json
 │
-├── tests/                         # Comprehensive pytest test suite (76 tests)
+├── tests/                         # Comprehensive pytest test suite (135 tests)
 │   ├── test_lab1.py
 │   ├── test_lab2.py
 │   ├── test_lab3.py
 │   ├── test_lab4.py
-│   └── test_lab5.py
+│   ├── test_lab5.py
+│   ├── test_lab6.py
+│   ├── test_lab7.py
+│   └── test_lab8.py
 │
 ├── demo.py                        # Terminal CLI demonstration
 ├── requirements.txt               # Dependencies

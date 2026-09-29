@@ -1,0 +1,160 @@
+{
+  "checkpoint_id": "cp_c0aa3887e97d",
+  "run_id": "run_1754c973",
+  "batch_id": "batch_53745cb7",
+  "student_id": "student_001",
+  "timestamp": "2026-09-29T04:58:55.610294+00:00",
+  "node": "coding_analytics_agent",
+  "state_snapshot": {
+    "run_id": "run_1754c973",
+    "batch_id": "batch_53745cb7",
+    "student_id": "student_001",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_001",
+      "name": "Arjun Mehta",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.4,
+      "skills": {
+        "DSA": "intermediate",
+        "Java": "intermediate",
+        "Python": "beginner",
+        "SQL": "intermediate",
+        "DBMS": "beginner",
+        "Operating Systems": "beginner",
+        "Computer Networks": "beginner"
+      },
+      "projects": [
+        "Data pipeline using Apache Spark",
+        "AI-based resume parser"
+      ],
+      "coding_stats": {
+        "problems_solved": 250,
+        "contest_rating": 1450
+      }
+    },
+    "resume_summary": {
+      "name": "Arjun Mehta",
+      "branch": "Computer Science",
+      "cgpa": 8.4,
+      "top_skills": [
+        "DSA (intermediate)",
+        "Java (intermediate)",
+        "SQL (intermediate)"
+      ],
+      "weak_skills": [
+        "Python",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Data pipeline using Apache Spark",
+        "AI-based resume parser"
+      ],
+      "problems_solved": 250,
+      "contest_rating": 1450,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [
+        {
+          "skill": "DSA",
+          "level": "intermediate",
+          "status": "met"
+        },
+        {
+          "skill": "Java",
+          "level": "intermediate",
+          "status": "met"
+        }
+      ],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [],
+      "skill_gaps": [
+        {
+          "skill": "DBMS",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "beginner",
+          "required_level": "intermediate+",
+          "gap_severity": "moderate"
+        }
+      ],
+      "coverage_score": 54.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {
+      "coding_score": 48.0,
+      "project_score": 66.67,
+      "problem_solving_trend": "moderate",
+      "contest_trend": "moderate",
+      "project_trend": "moderate",
+      "dsa_score": 62.0,
+      "aptitude_score": 70.0,
+      "communication_score": 65.0,
+      "mock_interview_score": 58.0,
+      "summary": "Coding: 48.0/100 | Projects: 66.7/100 | DSA Assessment: 62.0/100"
+    },
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent",
+      "coding_analytics_agent"
+    ],
+    "checkpoint_id": "cp_ea33bee6bc7f",
+    "current_node": "coding_analytics_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Arjun Mehta (student_001)",
+      "Skill gap analysis: 2 met, 3 gaps, coverage=54.0%",
+      "Coding analytics: score=48.0, projects=66.7, problems=250"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent",
+    "coding_analytics_agent"
+  ],
+  "status": "valid"
+}

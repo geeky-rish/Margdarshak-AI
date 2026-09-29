@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: "Segoe UI", Arial, sans-serif; line-height: 1.5; margin: 40px; color: #333; }
+  h1, h2, h3 { color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+  pre { background: #f8f9fa; padding: 15px; border-radius: 5px; border: 1px solid #ddd; white-space: pre-wrap; font-family: Consolas, monospace; }
+  b { color: #000; }
+</style>
+</head>
+<body>
+<h2>Margdarshak-AI: Positive Test Plan</h2>
+Here is the comprehensive, happy-path-only test plan for Labs 1–8 of the Margdarshak-AI Portal, based directly on the actual <pre>app/main.py</pre> endpoints, Pydantic schemas, and existing frontend UI.
+
+I have not modified any files to produce this.
+
+
+MASTER POSITIVE TEST DATA
+
+
+Use the <b>&quot;Add Student&quot;</b> UI tab or the <pre>POST /students</pre> endpoint to load these exact, schema-compliant profiles before beginning the tests.
+
+<b>STUDENT A — Strong Software Engineer</b>
+<pre></pre><pre>{<br>  &quot;student_id&quot;: &quot;student_A&quot;,<br>  &quot;name&quot;: &quot;Alice Sharma&quot;,<br>  &quot;branch&quot;: &quot;Computer Science&quot;,<br>  &quot;cgpa&quot;: 9.2,<br>  &quot;skills&quot;: {&quot;Python&quot;: &quot;advanced&quot;, &quot;System Design&quot;: &quot;intermediate&quot;, &quot;React&quot;: &quot;advanced&quot;},<br>  &quot;projects&quot;: [&quot;Distributed Cache System&quot;, &quot;E-commerce Backend&quot;],<br>  &quot;coding_stats&quot;: {&quot;problems_solved&quot;: 450, &quot;contest_rating&quot;: 1800},<br>  &quot;dsa_score&quot;: 92.0,<br>  &quot;aptitude_score&quot;: 88.0,<br>  &quot;communication_score&quot;: 90.0,<br>  &quot;mock_interview_score&quot;: 85.0<br>}<br></pre><pre></pre>
+
+<b>STUDENT B — Moderate Software Engineer</b>
+<pre></pre><pre>{<br>  &quot;student_id&quot;: &quot;student_B&quot;,<br>  &quot;name&quot;: &quot;Bob Singh&quot;,<br>  &quot;branch&quot;: &quot;Information Technology&quot;,<br>  &quot;cgpa&quot;: 7.8,<br>  &quot;skills&quot;: {&quot;Java&quot;: &quot;intermediate&quot;, &quot;SQL&quot;: &quot;intermediate&quot;},<br>  &quot;projects&quot;: [&quot;Library Management System&quot;],<br>  &quot;coding_stats&quot;: {&quot;problems_solved&quot;: 120, &quot;contest_rating&quot;: 1200},<br>  &quot;dsa_score&quot;: 70.0,<br>  &quot;aptitude_score&quot;: 75.0,<br>  &quot;communication_score&quot;: 80.0,<br>  &quot;mock_interview_score&quot;: 65.0<br>}<br></pre><pre></pre>
+
+<b>STUDENT C — Strong Data/AI Profile</b>
+<pre></pre><pre>{<br>  &quot;student_id&quot;: &quot;student_C&quot;,<br>  &quot;name&quot;: &quot;Charlie Gupta&quot;,<br>  &quot;branch&quot;: &quot;Data Science&quot;,<br>  &quot;cgpa&quot;: 8.9,<br>  &quot;skills&quot;: {&quot;Python&quot;: &quot;advanced&quot;, &quot;PyTorch&quot;: &quot;advanced&quot;, &quot;SQL&quot;: &quot;advanced&quot;},<br>  &quot;projects&quot;: [&quot;Predictive Analytics Engine&quot;, &quot;Computer Vision Defect Detector&quot;],<br>  &quot;coding_stats&quot;: {&quot;problems_solved&quot;: 300, &quot;contest_rating&quot;: 1600},<br>  &quot;dsa_score&quot;: 85.0,<br>  &quot;aptitude_score&quot;: 95.0,<br>  &quot;communication_score&quot;: 85.0,<br>  &quot;mock_interview_score&quot;: 90.0<br>}<br></pre><pre></pre>
+
+<b>STUDENT D — Strong Full-Stack Profile</b>
+<pre></pre><pre>{<br>  &quot;student_id&quot;: &quot;student_D&quot;,<br>  &quot;name&quot;: &quot;Diana Patel&quot;,<br>  &quot;branch&quot;: &quot;Computer Science&quot;,<br>  &quot;cgpa&quot;: 8.5,<br>  &quot;skills&quot;: {&quot;JavaScript&quot;: &quot;advanced&quot;, &quot;Node.js&quot;: &quot;advanced&quot;, &quot;MongoDB&quot;: &quot;intermediate&quot;},<br>  &quot;projects&quot;: [&quot;Real-time Chat App&quot;, &quot;Portfolio Generator&quot;],<br>  &quot;coding_stats&quot;: {&quot;problems_solved&quot;: 250, &quot;contest_rating&quot;: 1500},<br>  &quot;dsa_score&quot;: 82.0,<br>  &quot;aptitude_score&quot;: 80.0,<br>  &quot;communication_score&quot;: 95.0,<br>  &quot;mock_interview_score&quot;: 88.0<br>}<br></pre><pre></pre>
+
+<b>Target Roles (Already present in backend <pre>data/roles.json</pre>):</b>
+*   <pre>Software Engineer</pre>
+*   <pre>Data Analyst</pre>
+*   <pre>ML Engineer</pre>
+
+
+LAB 1 — AGENT LOOP
+
+
+<b>1. Test Case Name:</b> Interactive Clarify → Plan → Revise Loop
+<b>2. Purpose:</b> Demonstrate the conversational state machine where the agent clarifies vague requests, generates a plan, and revises it based on human feedback.
+<b>3. Exact data/input:</b>
+*   Message 1: &quot;I want to get a software job&quot;
+*   Message 2: &quot;Computer Science, I know Python&quot;
+*   Message 3: &quot;Please add a stronger focus on System Design&quot;
+<b>4. Exact UI action:</b> Go to &quot;Agent Loop (Lab 1)&quot; tab. Use the chat interface.
+<b>5. Expected result:</b> The agent responds conversationally, transitioning internal states (<pre>clarifying</pre> → <pre>planning</pre> → <pre>revising</pre>).
+<b>6. What I should observe:</b>
+*   *After Msg 1:* Agent asks for branch/skills.
+*   *After Msg 2:* Agent outputs a structured placement readiness plan.
+*   *After Msg 3:* Agent acknowledges feedback and outputs an updated plan containing &quot;System Design&quot;.
+<b>7. PASS condition:</b> The agent successfully incorporates the revision without losing the context of the previous plan.
+<b>8. Screenshot/evidence:</b> Capture the chat window showing the final revised plan bubble.
+
+
+LAB 2 — TOOL-USING AGENT
+
+
+<b>1. Test Case Name:</b> Deterministic Data Fetch &amp; Tool Execution
+<b>2. Purpose:</b> Prove the system successfully binds and executes the <pre>get_student_profile</pre>, <pre>get_role_requirements</pre>, and <pre>calculate_readiness</pre> tools to yield exact numeric results.
+<b>3. Exact data/input:</b> Student A (<pre>student_A</pre>), Role: <pre>Software Engineer</pre>.
+<b>4. Exact UI action:</b> Go to &quot;Readiness Tool (Lab 2)&quot; tab. Select &quot;Alice Sharma (student_A)&quot;, Role &quot;Software Engineer&quot;. Click &quot;Run Direct Tool Analysis&quot;.
+*(API equivalent: <pre>POST /analyze</pre> with <pre>{&quot;student_id&quot;: &quot;student_A&quot;, &quot;role_name&quot;: &quot;Software Engineer&quot;}</pre>)*
+<b>5. Expected result:</b> Exact deterministic calculation is returned.
+<b>6. What I should observe:</b> A JSON/UI card showing <pre>overall_readiness_score</pre> (calculated deterministically), <pre>meets_threshold: true</pre>, and <pre>skill_gaps: []</pre>.
+<b>7. PASS condition:</b> All data is populated directly from the backend data sources via tools; no fields are hallucinated or missing.
+<b>8. Screenshot/evidence:</b> Capture the JSON response/UI card showing the calculated percentages and <pre>meets_threshold</pre> boolean.
+
+
+LAB 3 — REUSABLE SKILLS
+
+
+<b>1. Test Case Name:</b> Skill Reusability Across Distinct Profiles
+<b>2. Purpose:</b> Demonstrate that <pre>FormatSkill</pre> and <pre>PlanSkill</pre> dynamically adapt to different context payloads without code changes.
+<b>3. Exact data/input:</b> Student A (<pre>student_A</pre>) and Student B (<pre>student_B</pre>). Target Role: <pre>Software Engineer</pre>.
+<b>4. Exact UI action:</b> Go to &quot;Full Pipeline&quot; tab. Run the pipeline once for Student A. Note the AI Summary. Change dropdown to Student B. Run the pipeline again.
+<b>5. Expected result:</b> Two distinct, highly personalized markdown summaries and plans.
+<b>6. What I should observe:</b>
+*   *Student A:* Summary praises high CGPA (9.2) and DSA score, noting they are highly competitive.
+*   *Student B:* Summary notes lower CGPA (7.8) and low DSA score (70.0), explicitly suggesting remedial steps.
+<b>7. PASS condition:</b> Both profiles successfully pass through the exact same <pre>FormatSkill</pre> execution block and yield context-accurate reports.
+<b>8. Screenshot/evidence:</b> Capture the &quot;AI Executive Summary&quot; card for both students side-by-side.
+
+
+LAB 4 — MEMORY &amp; RETRIEVAL
+
+
+<b>1. Test Case Name:</b> Semantic Similarity Search
+<b>2. Purpose:</b> Prove ChromaDB vector store retrieves historically relevant student profiles based on semantic meaning, not just keyword matching.
+<b>3. Exact data/input:</b> Query: <pre>&quot;Candidate with strong python and deep learning looking for data roles&quot;</pre>, Top K = <pre>3</pre>.
+<b>4. Exact UI action:</b> Go to &quot;Vector Memory (Lab 4)&quot; tab. Paste the query, select &quot;Top 3&quot;, click &quot;Vector Search&quot;.
+*(API equivalent: <pre>POST /memory/similar</pre> with <pre>{&quot;query&quot;: &quot;Candidate with...&quot;, &quot;k&quot;: 3}</pre>)*
+<b>5. Expected result:</b> Retrieves historical students matching that semantic profile.
+<b>6. What I should observe:</b> The UI populates a grid of 3 past cases (e.g., historical students who matched AI/Data Science profiles) returning their <pre>student_id</pre>, <pre>match_score</pre>, and <pre>metadata</pre>.
+<b>7. PASS condition:</b> At least one relevant historical data science/ML student is returned from the embedded memory store.
+<b>8. Screenshot/evidence:</b> Capture the memory search result grid showing the matched tags and similarity distances.
+
+
+LAB 5 — MCP-STYLE CONNECTOR
+
+
+<b>1. Test Case Name:</b> Governed Connector Verification
+<b>2. Purpose:</b> Verify that agents do not access raw files, but route all queries through the <pre>PlacementConnector</pre>.
+<b>3. Exact data/input:</b> Student C (<pre>student_C</pre>).
+<b>4. Exact UI action:</b> Go to &quot;Full Pipeline&quot; tab. Select Student C, run the workflow.
+<b>5. Expected result:</b> Complete data access path works: Agent → Connector → Source → Result.
+<b>6. What I should observe:</b> The final UI report explicitly displays Charlie Gupta&#x27;s exact <pre>branch: Data Science</pre> and <pre>cgpa: 8.9</pre>.
+<b>7. PASS condition:</b> The API logs (in terminal) will show requests passing through <pre>PlacementConnector(_SYSTEM_CONTEXT)</pre> successfully fetching the profile without unauthorized exceptions.
+<b>8. Screenshot/evidence:</b> Capture the terminal logs showing the <pre>PlacementConnector</pre> instantiation and successful 200 OK HTTP response for the full pipeline run.
+
+
+LAB 6 — GOVERNED RUNTIME
+
+
+<b>1. Test Case Name:</b> Full Governance Lifecycle (Audit &amp; Approval)
+<b>2. Purpose:</b> Prove the runtime logs telemetry, halts at an approval gate, and allows human-in-the-loop progression.
+<b>3. Exact data/input:</b> Student D (<pre>student_D</pre>), Target Role: <pre>Software Engineer</pre>.
+<b>4. Exact UI action / API:</b>
+*   Go to &quot;Runtime &amp; Audit (Lab 6)&quot; tab.
+*   *(Note: You can start this by running Lab 7, which outputs a Run ID, and pasting it here).*
+*   Enter the <pre>run_id</pre>, click &quot;Fetch Status &amp; Audit&quot;.
+*   Click &quot;Approve&quot;.
+*   Click &quot;Publish&quot;.
+<b>5. Expected result:</b> Status transitions correctly: <pre>pending_approval</pre> → <pre>approved</pre> → <pre>published</pre>.
+<b>6. What I should observe:</b>
+*   The &quot;Audit Trail&quot; table populates with JSONL telemetry entries (<pre>action: start</pre>, <pre>action: execute_node</pre>, <pre>status: success</pre>).
+*   The status badge changes to <pre>approved</pre> after clicking Approve.
+*   The status badge changes to <pre>published</pre> after clicking Publish.
+<b>7. PASS condition:</b> The budget is tracked, audit logs display timestamps, and the state machine enforces the <pre>approved</pre> gate before <pre>published</pre> is allowed.
+<b>8. Screenshot/evidence:</b> Capture the Audit Trail table displaying the chronological timestamps, nodes, and <pre>success</pre> status badges.
+
+
+LAB 7 — AGENTIC NODE GRAPH
+
+
+<b>1. Test Case Name:</b> Sequential Node Graph Execution
+<b>2. Purpose:</b> Demonstrate the deterministic flow of data through specialized sub-agents.
+<b>3. Exact data/input:</b> Student A (<pre>student_A</pre>), Target Role: <pre>Software Engineer</pre>.
+<b>4. Exact UI action:</b> Go to &quot;Node Graph (Lab 7)&quot; tab. Select Student A, Role: Software Engineer. Click &quot;Start Agentic Node Graph&quot;.
+<b>5. Expected result:</b> The execution graph traverses all 6 nodes sequentially.
+<b>6. What I should observe:</b>
+*   The UI nodes (<pre>Resume Agent</pre>, <pre>Skill Gap Agent</pre>, <pre>Coding Analytics Agent</pre>, <pre>Job Matching Agent</pre>, <pre>Interview Agent</pre>, <pre>Validation Agent</pre>) will pulse one by one as they are processed.
+*   Once finished, they will all light up as active/completed.
+*   The &quot;Validation Result&quot; JSON block will appear at the bottom showing <pre>is_valid: true</pre>.
+<b>7. PASS condition:</b> The <pre>completed_nodes</pre> array in the <pre>GET /runs/{run_id}</pre> payload eventually contains all 6 agent identifiers, and the run status lands on <pre>pending_approval</pre>.
+<b>8. Screenshot/evidence:</b> Capture the UI showing all 6 nodes highlighted as completed, and the Validation JSON block visible.
+
+
+LAB 8 — PARALLEL SWARM
+
+
+<b>1. Test Case Name:</b> Bounded Parallel Fan-Out / Fan-In
+<b>2. Purpose:</b> Prove the <pre>BatchRunner</pre> successfully orchestrates multiple node graphs concurrently, isolating state and merging the results.
+<b>3. Exact data/input:</b> <pre>student_A, student_B, student_C, student_D</pre>. Target Role: <pre>Software Engineer</pre>.
+<b>4. Exact UI action:</b> Go to &quot;Swarm Batch (Lab 8)&quot; tab. Type the IDs into the input box. Click &quot;Start Parallel Swarm&quot;.
+*(API equivalent: <pre>POST /batch-runs</pre> with payload <pre>{&quot;student_ids&quot;: [&quot;student_A&quot;, &quot;student_B&quot;, &quot;student_C&quot;, &quot;student_D&quot;], &quot;target_role&quot;: &quot;Software Engineer&quot;, ...}</pre>)*
+<b>5. Expected result:</b> The batch initiates, spawns 4 concurrent threads via <pre>ThreadPoolExecutor</pre>, processes them, and returns a single merged <pre>BatchResult</pre>.
+<b>6. What I should observe:</b>
+*   The UI updates to show <pre>Batch: batch_&lt;id&gt;</pre>.
+*   &quot;Successful&quot; counter increments to <pre>4</pre>.
+*   &quot;Failed&quot; counter is <pre>0</pre>.
+*   The list of successful students clearly lists all 4 IDs.
+*   The &quot;Metrics&quot; JSON box displays aggregate data (e.g., total duration, average scores).
+<b>7. PASS condition:</b> All 4 students are processed concurrently without data cross-contamination, successfully fanning in to a single payload.
+<b>8. Screenshot/evidence:</b> Capture the Swarm Status dashboard showing 4 successful executions and the populated Metrics box.
+
+
+FINAL POSITIVE TEST CHECKLIST
+
+
+<b>LAB 1</b>
+[x] Clarification works
+[x] Plan generation works
+[x] Plan revision works
+
+<b>LAB 2</b>
+[x] Student data tool works
+[x] Role requirement tool works
+[x] Computation tool works
+
+<b>LAB 3</b>
+[x] Planning skill works
+[x] Formatting skill works
+[x] Same skills work for multiple students
+
+<b>LAB 4</b>
+[x] Tag retrieval works
+[x] Similarity retrieval works
+[x] Stored memory retrieval works
+[x] Run state is maintained separately
+
+<b>LAB 5</b>
+[x] Student data connector works
+[x] Role requirements connector works
+[x] Skill data connector works
+[x] Agent → Connector → Source works
+
+<b>LAB 6</b>
+[x] Runtime starts
+[x] Budget tracking works
+[x] Audit logging works
+[x] Checkpoint works
+[x] Approval works
+[x] Resume works
+[x] Publish works
+
+<b>LAB 7</b>
+[x] Resume Agent works
+[x] Skill Gap Agent works
+[x] Coding Analytics Agent works
+[x] Job Matching Agent works
+[x] Interview Agent works
+[x] Validation Agent works
+[x] Complete graph executes successfully
+[x] Approved result is published
+
+<b>LAB 8</b>
+[x] Batch starts
+[x] Fan-out works
+[x] Parallel student execution works
+[x] Per-student isolation works
+[x] Fan-in works
+[x] Merge works
+[x] Final batch result is produced
+
+
+RECOMMENDED END-TO-END DEMONSTRATION
+
+
+To prove the entire architecture (Labs 1-8) works in a single, minimal 3-step demonstration:
+
+<b>Step 1: Load Profiles</b>
+Go to <b>&quot;Add Student&quot;</b> tab. Create <pre>student_A</pre> and <pre>student_B</pre> using the JSON payloads provided above.
+
+<b>Step 2: Run the Swarm (Labs 7 &amp; 8)</b>
+Go to <b>&quot;Swarm Batch (Lab 8)&quot;</b> tab.
+Enter: <pre>student_A, student_B</pre>.
+Role: <pre>Software Engineer</pre>.
+Click Start.
+*Proof:* This proves Parallel Batching (Lab 8) works, which internally executes the full Node Graph (Lab 7), which relies entirely on the Governed Runtime (Lab 6) and the MCP Connector (Lab 5).
+
+<b>Step 3: Audit &amp; Approve (Lab 6)</b>
+Go to <b>&quot;Runtime &amp; Audit (Lab 6)&quot;</b> tab.
+Enter the Run ID generated for <pre>student_A</pre> (you can find it in the backend terminal logs or by checking the network tab).
+Click <b>&quot;Fetch Status &amp; Audit&quot;</b>.
+Click <b>&quot;Approve&quot;</b>.
+Click <b>&quot;Publish&quot;</b>.
+*Proof:* This proves the Audit Trail, Checkpointing, and Gate Approval features successfully manage state generated by the autonomous agents.
+
+</body>
+</html>

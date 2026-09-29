@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupToolAnalysisForm();
     setupMemorySearchForm();
     setupCreateStudentForm();
+    setupLab6();
+    setupLab7();
+    setupLab8();
 });
 
 // Helper for API headers with custom key
@@ -52,6 +55,7 @@ async function loadStudentDropdowns(selectIdToPick = null) {
 
         const runSelect = document.getElementById('run-student-id');
         const toolSelect = document.getElementById('tool-student-id');
+        const lab7Select = document.getElementById('lab7-student-id');
 
         if (runSelect && toolSelect) {
             const html = students.map(s => `
@@ -60,10 +64,12 @@ async function loadStudentDropdowns(selectIdToPick = null) {
 
             runSelect.innerHTML = html;
             toolSelect.innerHTML = html;
+            if (lab7Select) lab7Select.innerHTML = html;
 
             if (selectIdToPick) {
                 runSelect.value = selectIdToPick;
                 toolSelect.value = selectIdToPick;
+                if (lab7Select) lab7Select.value = selectIdToPick;
             }
         }
     } catch (e) {
@@ -503,3 +509,268 @@ function setupCreateStudentForm() {
         }
     });
 }
+
+// ==========================================
+// LAB 7: AGENTIC NODE GRAPH
+// ==========================================
+let activeLab7Poll = null;
+
+function setupLab7() {
+    const form = document.getElementById('lab7-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const studentId = document.getElementById('lab7-student-id').value;
+        const targetRole = document.getElementById('lab7-target-role').value;
+        
+        const btn = document.getElementById('lab7-run-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Starting Graph...';
+        
+        try {
+            const res = await fetch('/runs', {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
+                    student_id: studentId,
+                    target_role: targetRole,
+                    actor_id: 'system',
+                    actor_role: 'system'
+                })
+            });
+            
+            if (!res.ok) {
+                const err = await res.json();
+                alert(`Failed to start run: ${err.detail || 'Unknown error'}`);
+                return;
+            }
+            const data = await res.json();
+            
+            // Link to Lab 6 text input for convenience
+            const lab6Input = document.getElementById('lab6-run-id');
+            if (lab6Input) lab6Input.value = data.run_id;
+            
+            pollLab7Run(data.run_id);
+        } catch (err) {
+            alert('Error starting graph');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-play"></i> Start Agentic Node Graph';
+        }
+    });
+}
+
+function pollLab7Run(runId) {
+    if (activeLab7Poll) clearInterval(activeLab7Poll);
+    
+    const updateUI = (data) => {
+        document.getElementById('lab7-run-id').textContent = data.run_id || '--';
+        document.getElementById('lab7-status-pill').textContent = `Status: ${data.status || 'unknown'}`;
+        document.getElementById('lab7-approval').textContent = data.approval_status || '--';
+        
+        const nodes = ['resume_agent', 'skill_gap_agent', 'coding_analytics_agent', 'job_matching_agent', 'interview_agent', 'validation_agent'];
+        nodes.forEach(node => {
+            const el = document.getElementById(`node-${node}`);
+            if (el) {
+                el.className = 'step-item';
+                if (data.completed_nodes && data.completed_nodes.includes(node)) {
+                    el.classList.add('active');
+                    el.style.color = '';
+                } else if (data.current_node === node) {
+                    el.classList.add('pulsating');
+                    el.style.color = '#f59e0b';
+                }
+            }
+        });
+        
+        if (data.validation_report) {
+            document.getElementById('lab7-validation').style.display = 'block';
+            document.getElementById('lab7-validation-text').textContent = JSON.stringify(data.validation_report, null, 2);
+        } else {
+            document.getElementById('lab7-validation').style.display = 'none';
+        }
+        
+        if (data.status !== 'running' && data.status !== 'pending') {
+            clearInterval(activeLab7Poll);
+        }
+    };
+
+    activeLab7Poll = setInterval(async () => {
+        try {
+            const res = await fetch(`/runs/${runId}`, { headers: getAuthHeaders() });
+            if (res.ok) {
+                const data = await res.json();
+                updateUI(data);
+            }
+        } catch (e) {
+            console.error('Polling error', e);
+        }
+    }, 1000);
+    
+    // Initial fetch
+    fetch(`/runs/${runId}`, { headers: getAuthHeaders() }).then(r => r.ok && r.json()).then(d => { if(d) updateUI(d); });
+}
+
+// ==========================================
+// LAB 6: GOVERNED RUNTIME (Audit & Approvals)
+// ==========================================
+function setupLab6() {
+    const fetchBtn = document.getElementById('lab6-fetch-btn');
+    if (!fetchBtn) return;
+    
+    fetchBtn.addEventListener('click', async () => {
+        const runId = document.getElementById('lab6-run-id').value.trim();
+        if (!runId) return;
+        
+        try {
+            const statRes = await fetch(`/runs/${runId}`, { headers: getAuthHeaders() });
+            if (statRes.ok) {
+                const statData = await statRes.json();
+                document.getElementById('lab6-status').textContent = statData.status || '--';
+                document.getElementById('lab6-approval').textContent = statData.approval_status || '--';
+                document.getElementById('lab6-budget').textContent = statData.completed_nodes ? `${statData.completed_nodes.length} nodes processed` : '--';
+            }
+            
+            const audRes = await fetch(`/runs/${runId}/audit`, { headers: getAuthHeaders() });
+            if (audRes.ok) {
+                const audData = await audRes.json();
+                const tbody = document.getElementById('lab6-audit-tbody');
+                tbody.innerHTML = audData.events.map(e => `
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <td style="padding: 8px;">${e.node || '--'}</td>
+                        <td style="padding: 8px;">${e.action}</td>
+                        <td style="padding: 8px;"><span class="pill-tag">${e.status}</span></td>
+                        <td style="padding: 8px; font-size: 0.8em; color: var(--text-dim);">${new Date(e.timestamp).toLocaleTimeString()}</td>
+                    </tr>
+                `).join('');
+            }
+        } catch(e) {
+            alert('Failed to fetch Lab 6 data');
+        }
+    });
+
+    const actionCall = async (endpoint, method, body=null) => {
+        const runId = document.getElementById('lab6-run-id').value.trim();
+        if (!runId) return;
+        try {
+            const res = await fetch(`/runs/${runId}${endpoint}`, {
+                method: method,
+                headers: getAuthHeaders(),
+                body: body ? JSON.stringify(body) : undefined
+            });
+            if (res.ok) {
+                alert('Action executed successfully.');
+                fetchBtn.click();
+            } else {
+                const err = await res.json();
+                alert(`Action failed: ${err.detail || 'Unknown'}`);
+            }
+        } catch(e) { alert('Network Error'); }
+    };
+
+    document.getElementById('lab6-resume-btn').addEventListener('click', () => {
+        actionCall('/resume', 'POST', { student_id: "student_001", target_role: "Software Engineer", actor_id: "system", actor_role: "system" });
+    });
+    document.getElementById('lab6-approve-btn').addEventListener('click', () => {
+        actionCall('/approve', 'POST', { reviewer_id: 'officer_1', decision: 'approved', comments: 'Looks good' });
+    });
+    document.getElementById('lab6-reject-btn').addEventListener('click', () => {
+        actionCall('/approve', 'POST', { reviewer_id: 'officer_1', decision: 'rejected', comments: 'Rejected' });
+    });
+    document.getElementById('lab6-revise-btn').addEventListener('click', () => {
+        actionCall('/revise', 'POST', { reviewer_id: 'officer_1', feedback: 'Needs more info' });
+    });
+    document.getElementById('lab6-publish-btn').addEventListener('click', () => {
+        actionCall('/publish', 'POST');
+    });
+}
+
+// ==========================================
+// LAB 8: PARALLEL SWARM
+// ==========================================
+let activeLab8Poll = null;
+
+function setupLab8() {
+    const form = document.getElementById('lab8-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const idsStr = document.getElementById('lab8-student-ids').value;
+        const studentIds = idsStr.split(',').map(s => s.trim()).filter(s => s);
+        const targetRole = document.getElementById('lab8-target-role').value;
+        
+        const btn = document.getElementById('lab8-run-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Spawning Swarm...';
+        
+        try {
+            const res = await fetch('/batch-runs', {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({
+                    student_ids: studentIds,
+                    target_role: targetRole,
+                    actor_id: 'system',
+                    actor_role: 'system',
+                    max_concurrency: 5
+                })
+            });
+            
+            if (res.ok) {
+                const data = await res.json();
+                pollLab8Batch(data.batch_id);
+            } else {
+                const err = await res.json();
+                alert(`Failed to start batch: ${err.detail || 'Unknown'}`);
+            }
+        } catch (err) {
+            alert('Failed to start batch');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-play"></i> Start Parallel Swarm';
+        }
+    });
+}
+
+function pollLab8Batch(batchId) {
+    if (activeLab8Poll) clearInterval(activeLab8Poll);
+    
+    const fetchBatch = async () => {
+        try {
+            const res = await fetch(`/batch-runs/${batchId}`, { headers: getAuthHeaders() });
+            if (res.ok) {
+                const data = await res.json();
+                updateLab8UI(data);
+                
+                // If total processed equals total students, we can stop polling
+                const totalProcessed = data.successful.length + data.failed.length + data.pending_approval.length + data.requires_review.length;
+                if (totalProcessed >= data.total_students) {
+                    clearInterval(activeLab8Poll);
+                }
+            }
+        } catch (e) {
+            console.error('Batch poll error', e);
+        }
+    };
+    
+    fetchBatch(); // immediate fetch
+    activeLab8Poll = setInterval(fetchBatch, 2000); // Poll every 2s
+}
+
+function updateLab8UI(data) {
+    document.getElementById('lab8-batch-id').textContent = `Batch: ${data.batch_id}`;
+    
+    document.getElementById('lab8-succ-count').textContent = data.successful.length;
+    document.getElementById('lab8-fail-count').textContent = data.failed.length;
+    document.getElementById('lab8-pend-count').textContent = data.pending_approval.length;
+    
+    document.getElementById('lab8-succ-list').innerHTML = data.successful.map(r => `<li>${r.student_id}</li>`).join('');
+    document.getElementById('lab8-fail-list').innerHTML = data.failed.map(r => `<li>${r.student_id} <span style="color:red;font-size:0.8em">(${r.error || 'error'})</span></li>`).join('');
+    document.getElementById('lab8-pend-list').innerHTML = data.pending_approval.map(r => `<li>${r.student_id}</li>`).join('');
+    
+    document.getElementById('lab8-metrics').textContent = JSON.stringify(data.aggregate_metrics || {}, null, 2);
+}
+

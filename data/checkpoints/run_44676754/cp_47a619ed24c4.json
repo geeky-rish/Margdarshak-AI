@@ -1,0 +1,47 @@
+{
+  "checkpoint_id": "cp_47a619ed24c4",
+  "run_id": "run_44676754",
+  "batch_id": null,
+  "student_id": "student_001",
+  "timestamp": "2026-09-29T05:10:09.146349+00:00",
+  "node": "test_node",
+  "state_snapshot": {
+    "run_id": "run_44676754",
+    "batch_id": null,
+    "student_id": "student_001",
+    "consent": false,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": null,
+    "resume_summary": {},
+    "skill_gap": {},
+    "coding_analytics": {},
+    "company_matches": [],
+    "placement_score": 75.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "test_node"
+    ],
+    "checkpoint_id": "cp_0e191b322b7e",
+    "current_node": "test_node",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "test_node"
+  ],
+  "status": "valid"
+}

@@ -1,0 +1,296 @@
+Here is the comprehensive, happy-path-only test plan for Labs 1–8 of the Margdarshak-AI Portal, based directly on the actual `app/main.py` endpoints, Pydantic schemas, and existing frontend UI.
+
+I have not modified any files to produce this.
+
+==================================================
+MASTER POSITIVE TEST DATA
+==================================================
+
+Use the **"Add Student"** UI tab or the `POST /students` endpoint to load these exact, schema-compliant profiles before beginning the tests.
+
+**STUDENT A — Strong Software Engineer**
+```json
+{
+  "student_id": "student_A",
+  "name": "Alice Sharma",
+  "branch": "Computer Science",
+  "cgpa": 9.2,
+  "skills": {"Python": "advanced", "System Design": "intermediate", "React": "advanced"},
+  "projects": ["Distributed Cache System", "E-commerce Backend"],
+  "coding_stats": {"problems_solved": 450, "contest_rating": 1800},
+  "dsa_score": 92.0,
+  "aptitude_score": 88.0,
+  "communication_score": 90.0,
+  "mock_interview_score": 85.0
+}
+```
+
+**STUDENT B — Moderate Software Engineer**
+```json
+{
+  "student_id": "student_B",
+  "name": "Bob Singh",
+  "branch": "Information Technology",
+  "cgpa": 7.8,
+  "skills": {"Java": "intermediate", "SQL": "intermediate"},
+  "projects": ["Library Management System"],
+  "coding_stats": {"problems_solved": 120, "contest_rating": 1200},
+  "dsa_score": 70.0,
+  "aptitude_score": 75.0,
+  "communication_score": 80.0,
+  "mock_interview_score": 65.0
+}
+```
+
+**STUDENT C — Strong Data/AI Profile**
+```json
+{
+  "student_id": "student_C",
+  "name": "Charlie Gupta",
+  "branch": "Data Science",
+  "cgpa": 8.9,
+  "skills": {"Python": "advanced", "PyTorch": "advanced", "SQL": "advanced"},
+  "projects": ["Predictive Analytics Engine", "Computer Vision Defect Detector"],
+  "coding_stats": {"problems_solved": 300, "contest_rating": 1600},
+  "dsa_score": 85.0,
+  "aptitude_score": 95.0,
+  "communication_score": 85.0,
+  "mock_interview_score": 90.0
+}
+```
+
+**STUDENT D — Strong Full-Stack Profile**
+```json
+{
+  "student_id": "student_D",
+  "name": "Diana Patel",
+  "branch": "Computer Science",
+  "cgpa": 8.5,
+  "skills": {"JavaScript": "advanced", "Node.js": "advanced", "MongoDB": "intermediate"},
+  "projects": ["Real-time Chat App", "Portfolio Generator"],
+  "coding_stats": {"problems_solved": 250, "contest_rating": 1500},
+  "dsa_score": 82.0,
+  "aptitude_score": 80.0,
+  "communication_score": 95.0,
+  "mock_interview_score": 88.0
+}
+```
+
+**Target Roles (Already present in backend `data/roles.json`):**
+*   `Software Engineer`
+*   `Data Analyst`
+*   `ML Engineer`
+
+==================================================
+LAB 1 — AGENT LOOP
+==================================================
+
+**1. Test Case Name:** Interactive Clarify → Plan → Revise Loop
+**2. Purpose:** Demonstrate the conversational state machine where the agent clarifies vague requests, generates a plan, and revises it based on human feedback.
+**3. Exact data/input:**
+*   Message 1: "I want to get a software job"
+*   Message 2: "Computer Science, I know Python"
+*   Message 3: "Please add a stronger focus on System Design"
+**4. Exact UI action:** Go to "Agent Loop (Lab 1)" tab. Use the chat interface.
+**5. Expected result:** The agent responds conversationally, transitioning internal states (`clarifying` → `planning` → `revising`).
+**6. What I should observe:**
+*   *After Msg 1:* Agent asks for branch/skills.
+*   *After Msg 2:* Agent outputs a structured placement readiness plan.
+*   *After Msg 3:* Agent acknowledges feedback and outputs an updated plan containing "System Design".
+**7. PASS condition:** The agent successfully incorporates the revision without losing the context of the previous plan.
+**8. Screenshot/evidence:** Capture the chat window showing the final revised plan bubble.
+
+==================================================
+LAB 2 — TOOL-USING AGENT
+==================================================
+
+**1. Test Case Name:** Deterministic Data Fetch & Tool Execution
+**2. Purpose:** Prove the system successfully binds and executes the `get_student_profile`, `get_role_requirements`, and `calculate_readiness` tools to yield exact numeric results.
+**3. Exact data/input:** Student A (`student_A`), Role: `Software Engineer`.
+**4. Exact UI action:** Go to "Readiness Tool (Lab 2)" tab. Select "Alice Sharma (student_A)", Role "Software Engineer". Click "Run Direct Tool Analysis".
+*(API equivalent: `POST /analyze` with `{"student_id": "student_A", "role_name": "Software Engineer"}`)*
+**5. Expected result:** Exact deterministic calculation is returned.
+**6. What I should observe:** A JSON/UI card showing `overall_readiness_score` (calculated deterministically), `meets_threshold: true`, and `skill_gaps: []`.
+**7. PASS condition:** All data is populated directly from the backend data sources via tools; no fields are hallucinated or missing.
+**8. Screenshot/evidence:** Capture the JSON response/UI card showing the calculated percentages and `meets_threshold` boolean.
+
+==================================================
+LAB 3 — REUSABLE SKILLS
+==================================================
+
+**1. Test Case Name:** Skill Reusability Across Distinct Profiles
+**2. Purpose:** Demonstrate that `FormatSkill` and `PlanSkill` dynamically adapt to different context payloads without code changes.
+**3. Exact data/input:** Student A (`student_A`) and Student B (`student_B`). Target Role: `Software Engineer`.
+**4. Exact UI action:** Go to "Full Pipeline" tab. Run the pipeline once for Student A. Note the AI Summary. Change dropdown to Student B. Run the pipeline again.
+**5. Expected result:** Two distinct, highly personalized markdown summaries and plans.
+**6. What I should observe:**
+*   *Student A:* Summary praises high CGPA (9.2) and DSA score, noting they are highly competitive.
+*   *Student B:* Summary notes lower CGPA (7.8) and low DSA score (70.0), explicitly suggesting remedial steps.
+**7. PASS condition:** Both profiles successfully pass through the exact same `FormatSkill` execution block and yield context-accurate reports.
+**8. Screenshot/evidence:** Capture the "AI Executive Summary" card for both students side-by-side.
+
+==================================================
+LAB 4 — MEMORY & RETRIEVAL
+==================================================
+
+**1. Test Case Name:** Semantic Similarity Search
+**2. Purpose:** Prove ChromaDB vector store retrieves historically relevant student profiles based on semantic meaning, not just keyword matching.
+**3. Exact data/input:** Query: `"Candidate with strong python and deep learning looking for data roles"`, Top K = `3`.
+**4. Exact UI action:** Go to "Vector Memory (Lab 4)" tab. Paste the query, select "Top 3", click "Vector Search".
+*(API equivalent: `POST /memory/similar` with `{"query": "Candidate with...", "k": 3}`)*
+**5. Expected result:** Retrieves historical students matching that semantic profile.
+**6. What I should observe:** The UI populates a grid of 3 past cases (e.g., historical students who matched AI/Data Science profiles) returning their `student_id`, `match_score`, and `metadata`.
+**7. PASS condition:** At least one relevant historical data science/ML student is returned from the embedded memory store.
+**8. Screenshot/evidence:** Capture the memory search result grid showing the matched tags and similarity distances.
+
+==================================================
+LAB 5 — MCP-STYLE CONNECTOR
+==================================================
+
+**1. Test Case Name:** Governed Connector Verification
+**2. Purpose:** Verify that agents do not access raw files, but route all queries through the `PlacementConnector`.
+**3. Exact data/input:** Student C (`student_C`).
+**4. Exact UI action:** Go to "Full Pipeline" tab. Select Student C, run the workflow.
+**5. Expected result:** Complete data access path works: Agent → Connector → Source → Result.
+**6. What I should observe:** The final UI report explicitly displays Charlie Gupta's exact `branch: Data Science` and `cgpa: 8.9`.
+**7. PASS condition:** The API logs (in terminal) will show requests passing through `PlacementConnector(_SYSTEM_CONTEXT)` successfully fetching the profile without unauthorized exceptions.
+**8. Screenshot/evidence:** Capture the terminal logs showing the `PlacementConnector` instantiation and successful 200 OK HTTP response for the full pipeline run.
+
+==================================================
+LAB 6 — GOVERNED RUNTIME
+==================================================
+
+**1. Test Case Name:** Full Governance Lifecycle (Audit & Approval)
+**2. Purpose:** Prove the runtime logs telemetry, halts at an approval gate, and allows human-in-the-loop progression.
+**3. Exact data/input:** Student D (`student_D`), Target Role: `Software Engineer`.
+**4. Exact UI action / API:**
+*   Go to "Runtime & Audit (Lab 6)" tab.
+*   *(Note: You can start this by running Lab 7, which outputs a Run ID, and pasting it here).*
+*   Enter the `run_id`, click "Fetch Status & Audit".
+*   Click "Approve".
+*   Click "Publish".
+**5. Expected result:** Status transitions correctly: `pending_approval` → `approved` → `published`.
+**6. What I should observe:**
+*   The "Audit Trail" table populates with JSONL telemetry entries (`action: start`, `action: execute_node`, `status: success`).
+*   The status badge changes to `approved` after clicking Approve.
+*   The status badge changes to `published` after clicking Publish.
+**7. PASS condition:** The budget is tracked, audit logs display timestamps, and the state machine enforces the `approved` gate before `published` is allowed.
+**8. Screenshot/evidence:** Capture the Audit Trail table displaying the chronological timestamps, nodes, and `success` status badges.
+
+==================================================
+LAB 7 — AGENTIC NODE GRAPH
+==================================================
+
+**1. Test Case Name:** Sequential Node Graph Execution
+**2. Purpose:** Demonstrate the deterministic flow of data through specialized sub-agents.
+**3. Exact data/input:** Student A (`student_A`), Target Role: `Software Engineer`.
+**4. Exact UI action:** Go to "Node Graph (Lab 7)" tab. Select Student A, Role: Software Engineer. Click "Start Agentic Node Graph".
+**5. Expected result:** The execution graph traverses all 6 nodes sequentially.
+**6. What I should observe:**
+*   The UI nodes (`Resume Agent`, `Skill Gap Agent`, `Coding Analytics Agent`, `Job Matching Agent`, `Interview Agent`, `Validation Agent`) will pulse one by one as they are processed.
+*   Once finished, they will all light up as active/completed.
+*   The "Validation Result" JSON block will appear at the bottom showing `is_valid: true`.
+**7. PASS condition:** The `completed_nodes` array in the `GET /runs/{run_id}` payload eventually contains all 6 agent identifiers, and the run status lands on `pending_approval`.
+**8. Screenshot/evidence:** Capture the UI showing all 6 nodes highlighted as completed, and the Validation JSON block visible.
+
+==================================================
+LAB 8 — PARALLEL SWARM
+==================================================
+
+**1. Test Case Name:** Bounded Parallel Fan-Out / Fan-In
+**2. Purpose:** Prove the `BatchRunner` successfully orchestrates multiple node graphs concurrently, isolating state and merging the results.
+**3. Exact data/input:** `student_A, student_B, student_C, student_D`. Target Role: `Software Engineer`.
+**4. Exact UI action:** Go to "Swarm Batch (Lab 8)" tab. Type the IDs into the input box. Click "Start Parallel Swarm".
+*(API equivalent: `POST /batch-runs` with payload `{"student_ids": ["student_A", "student_B", "student_C", "student_D"], "target_role": "Software Engineer", ...}`)*
+**5. Expected result:** The batch initiates, spawns 4 concurrent threads via `ThreadPoolExecutor`, processes them, and returns a single merged `BatchResult`.
+**6. What I should observe:**
+*   The UI updates to show `Batch: batch_<id>`.
+*   "Successful" counter increments to `4`.
+*   "Failed" counter is `0`.
+*   The list of successful students clearly lists all 4 IDs.
+*   The "Metrics" JSON box displays aggregate data (e.g., total duration, average scores).
+**7. PASS condition:** All 4 students are processed concurrently without data cross-contamination, successfully fanning in to a single payload.
+**8. Screenshot/evidence:** Capture the Swarm Status dashboard showing 4 successful executions and the populated Metrics box.
+
+==================================================
+FINAL POSITIVE TEST CHECKLIST
+==================================================
+
+**LAB 1**
+[x] Clarification works
+[x] Plan generation works
+[x] Plan revision works
+
+**LAB 2**
+[x] Student data tool works
+[x] Role requirement tool works
+[x] Computation tool works
+
+**LAB 3**
+[x] Planning skill works
+[x] Formatting skill works
+[x] Same skills work for multiple students
+
+**LAB 4**
+[x] Tag retrieval works
+[x] Similarity retrieval works
+[x] Stored memory retrieval works
+[x] Run state is maintained separately
+
+**LAB 5**
+[x] Student data connector works
+[x] Role requirements connector works
+[x] Skill data connector works
+[x] Agent → Connector → Source works
+
+**LAB 6**
+[x] Runtime starts
+[x] Budget tracking works
+[x] Audit logging works
+[x] Checkpoint works
+[x] Approval works
+[x] Resume works
+[x] Publish works
+
+**LAB 7**
+[x] Resume Agent works
+[x] Skill Gap Agent works
+[x] Coding Analytics Agent works
+[x] Job Matching Agent works
+[x] Interview Agent works
+[x] Validation Agent works
+[x] Complete graph executes successfully
+[x] Approved result is published
+
+**LAB 8**
+[x] Batch starts
+[x] Fan-out works
+[x] Parallel student execution works
+[x] Per-student isolation works
+[x] Fan-in works
+[x] Merge works
+[x] Final batch result is produced
+
+==================================================
+RECOMMENDED END-TO-END DEMONSTRATION
+==================================================
+
+To prove the entire architecture (Labs 1-8) works in a single, minimal 3-step demonstration:
+
+**Step 1: Load Profiles**
+Go to **"Add Student"** tab. Create `student_A` and `student_B` using the JSON payloads provided above.
+
+**Step 2: Run the Swarm (Labs 7 & 8)**
+Go to **"Swarm Batch (Lab 8)"** tab.
+Enter: `student_A, student_B`.
+Role: `Software Engineer`.
+Click Start.
+*Proof:* This proves Parallel Batching (Lab 8) works, which internally executes the full Node Graph (Lab 7), which relies entirely on the Governed Runtime (Lab 6) and the MCP Connector (Lab 5).
+
+**Step 3: Audit & Approve (Lab 6)**
+Go to **"Runtime & Audit (Lab 6)"** tab.
+Enter the Run ID generated for `student_A` (you can find it in the backend terminal logs or by checking the network tab).
+Click **"Fetch Status & Audit"**.
+Click **"Approve"**.
+Click **"Publish"**.
+*Proof:* This proves the Audit Trail, Checkpointing, and Gate Approval features successfully manage state generated by the autonomous agents.

@@ -1,0 +1,385 @@
+{
+  "checkpoint_id": "cp_3c2c0539cbe3",
+  "run_id": "run_67ce2450",
+  "batch_id": "batch_d6a17a82",
+  "student_id": "student_003",
+  "timestamp": "2026-09-29T05:10:10.089390+00:00",
+  "node": "validation_passed",
+  "state_snapshot": {
+    "run_id": "run_67ce2450",
+    "batch_id": "batch_d6a17a82",
+    "student_id": "student_003",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": {
+      "plan_id": "plan_19fb57d3",
+      "student_id": "student_003",
+      "target_role": "Software Engineer",
+      "target_companies": [],
+      "focus_areas": [],
+      "steps": [
+        "Retrieve student profile via PlacementConnector.",
+        "Retrieve target role requirements via PlacementConnector.",
+        "Retrieve student skill assessment via PlacementConnector.",
+        "Validate profile and role inputs.",
+        "Calculate deterministic readiness scores (skill coverage, coding, projects).",
+        "Identify skill gaps and strengths.",
+        "Retrieve historically similar student cases from long-term memory.",
+        "Construct a structured ReadinessPlan.",
+        "Format the final placement readiness report via FormatSkill."
+      ],
+      "status": "locked"
+    },
+    "profile": {
+      "student_id": "student_003",
+      "name": "Rohan Das",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "skills": {
+        "Python": "advanced",
+        "Machine Learning": "intermediate",
+        "Deep Learning": "intermediate",
+        "TensorFlow": "intermediate",
+        "SQL": "intermediate",
+        "DSA": "intermediate",
+        "Statistics": "intermediate"
+      },
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "coding_stats": {
+        "problems_solved": 180,
+        "contest_rating": 1320
+      }
+    },
+    "resume_summary": {
+      "name": "Rohan Das",
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "top_skills": [
+        "Python (advanced)",
+        "Machine Learning (intermediate)",
+        "Deep Learning (intermediate)",
+        "TensorFlow (intermediate)",
+        "SQL (intermediate)",
+        "DSA (intermediate)",
+        "Statistics (intermediate)"
+      ],
+      "weak_skills": [],
+      "projects_count": 3,
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "problems_solved": 180,
+      "contest_rating": 1320,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [
+        {
+          "skill": "DSA",
+          "level": "intermediate",
+          "status": "met"
+        }
+      ],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "skill_gaps": [
+        {
+          "skill": "Java",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "DBMS",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        }
+      ],
+      "coverage_score": 15.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {
+      "coding_score": 34.4,
+      "project_score": 100.0,
+      "problem_solving_trend": "moderate",
+      "contest_trend": "moderate",
+      "project_trend": "strong",
+      "dsa_score": 55.0,
+      "aptitude_score": 68.0,
+      "communication_score": 60.0,
+      "mock_interview_score": 63.0,
+      "summary": "Coding: 34.4/100 | Projects: 100.0/100 | DSA Assessment: 55.0/100"
+    },
+    "company_matches": [
+      {
+        "company": "TCS",
+        "role": "Software Engineer",
+        "readiness_score": 37.82,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "Java",
+          "DBMS",
+          "Operating Systems"
+        ]
+      },
+      {
+        "company": "Infosys",
+        "role": "Software Engineer",
+        "readiness_score": 37.82,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "Java",
+          "DBMS",
+          "Operating Systems"
+        ]
+      },
+      {
+        "company": "Wipro",
+        "role": "Software Engineer",
+        "readiness_score": 37.82,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "Java",
+          "DBMS",
+          "Operating Systems"
+        ]
+      },
+      {
+        "company": "Accenture",
+        "role": "Software Engineer",
+        "readiness_score": 37.82,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "Java",
+          "DBMS",
+          "Operating Systems"
+        ]
+      },
+      {
+        "company": "Capgemini",
+        "role": "Software Engineer",
+        "readiness_score": 37.82,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "Java",
+          "DBMS",
+          "Operating Systems"
+        ]
+      },
+      {
+        "company": "HCL",
+        "role": "Software Engineer",
+        "readiness_score": 37.82,
+        "meets_threshold": false,
+        "gaps_to_close": [
+          "Java",
+          "DBMS",
+          "Operating Systems"
+        ]
+      }
+    ],
+    "placement_score": 37.82,
+    "match_confidence": 0.64,
+    "match_reasoning": "Score 37.8 is below minimum threshold 70.0 for Software Engineer. Strengths: DSA (intermediate). Gaps: Java, DBMS, Operating Systems.",
+    "interview_results": {
+      "focus_areas": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "recommended_practice": [
+        "Practice Java problems",
+        "Practice DBMS problems",
+        "Practice Operating Systems problems"
+      ],
+      "communication_note": "Needs improvement \u2014 practice structured responses",
+      "ai_generated": true,
+      "disclaimer": "This roadmap is AI-generated based on identified gaps. Consult with your mentor for personalised guidance."
+    },
+    "learning_roadmap": [
+      "[CRITICAL] Learn Java \u2014 required for Software Engineer. Recommended: structured course + hands-on projects.",
+      "[CRITICAL] Learn DBMS \u2014 required for Software Engineer. Recommended: structured course + hands-on projects.",
+      "[CRITICAL] Learn Operating Systems \u2014 required for Software Engineer. Recommended: structured course + hands-on projects.",
+      "[CODING] Maintain coding practice; participate in weekly contests to improve rating above 1500.",
+      "[INTERVIEW] Schedule mock interview with Placement Cell for personalised feedback."
+    ],
+    "validation_report": {
+      "passed": true,
+      "failures": [],
+      "warnings": [],
+      "diagnosis": "",
+      "validated_at": "2026-09-29T05:10:10.085821+00:00"
+    },
+    "retry_count": 0,
+    "approval_status": "validated",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent",
+      "coding_analytics_agent",
+      "job_matching_agent",
+      "interview_agent",
+      "assemble_plan",
+      "validation_agent"
+    ],
+    "checkpoint_id": "cp_78468009c860",
+    "current_node": "assemble_plan",
+    "readiness_analysis": {
+      "student_id": "student_003",
+      "target_role": "Software Engineer",
+      "skill_coverage_score": 15.0,
+      "coding_score": 34.4,
+      "project_score": 100.0,
+      "overall_readiness_score": 37.82,
+      "strengths": [
+        "DSA (intermediate)"
+      ],
+      "skill_gaps": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "meets_minimum_threshold": false
+    },
+    "final_report": {
+      "student_name": "Rohan Das",
+      "student_id": "student_003",
+      "target_role": "Software Engineer",
+      "overall_readiness_score": 37.82,
+      "meets_threshold": false,
+      "strengths": [
+        "DSA (intermediate)"
+      ],
+      "skill_gaps": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "coding_signals": {
+        "coding_score": 34.4,
+        "skill_coverage_score": 15.0,
+        "project_score": 100.0,
+        "overall_readiness_score": 37.82
+      },
+      "recommended_steps": [
+        "Focus on improving missing/weak skills: Java, DBMS, Operating Systems.",
+        "Also address: Computer Networks.",
+        "Increase DSA practice \u2014 target 300+ problems solved and a contest rating above 1500.",
+        "Schedule a mock interview with the Placement Cell for personalised feedback."
+      ],
+      "historical_similar_cases": [
+        {
+          "case_id": "case_005",
+          "student_id": "hist_005",
+          "target_role": "ML Engineer",
+          "readiness_score": 79.0,
+          "outcome": "placed",
+          "summary": "Student with strong Python and ML project depth placed at Swiggy. 3 end-to-end ML projects were decisive.",
+          "tags": [
+            "ml_engineer",
+            "python",
+            "deep_learning",
+            "tensorflow",
+            "placed",
+            "mlops"
+          ]
+        },
+        {
+          "case_id": "case_007",
+          "student_id": "hist_007",
+          "target_role": "Software Engineer",
+          "readiness_score": 88.0,
+          "outcome": "placed",
+          "summary": "Student with strong DSA and complete CS fundamentals placed at Accenture. High contest rating (1700+) was decisive.",
+          "tags": [
+            "software_engineer",
+            "java",
+            "dsa",
+            "placed",
+            "cs_fundamentals",
+            "strong_candidate"
+          ]
+        },
+        {
+          "case_id": "case_001",
+          "student_id": "hist_001",
+          "target_role": "Software Engineer",
+          "readiness_score": 74.5,
+          "outcome": "placed",
+          "summary": "Student with intermediate DSA and strong Java placed at TCS Digital. Improved OS fundamentals in final month.",
+          "tags": [
+            "software_engineer",
+            "java",
+            "dsa",
+            "placed",
+            "backend"
+          ]
+        }
+      ],
+      "plan_id": "plan_19fb57d3",
+      "ai_summary": null,
+      "report_text": "[truncated]"
+    },
+    "evidence": [
+      "Profile loaded for Rohan Das (student_003)",
+      "Skill gap analysis: 1 met, 4 gaps, coverage=15.0%",
+      "Coding analytics: score=34.4, projects=100.0, problems=180",
+      "Job matching: score=37.8, confidence=0.64, threshold_met=False",
+      "Interview prep: 5 roadmap items generated from 4 skill gaps"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent",
+    "coding_analytics_agent",
+    "job_matching_agent",
+    "interview_agent",
+    "assemble_plan",
+    "validation_agent"
+  ],
+  "status": "valid"
+}

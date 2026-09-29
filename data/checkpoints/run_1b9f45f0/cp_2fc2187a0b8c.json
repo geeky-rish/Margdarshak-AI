@@ -1,0 +1,153 @@
+{
+  "checkpoint_id": "cp_2fc2187a0b8c",
+  "run_id": "run_1b9f45f0",
+  "batch_id": "batch_570f4927",
+  "student_id": "student_003",
+  "timestamp": "2026-09-29T05:00:04.923562+00:00",
+  "node": "skill_gap_agent",
+  "state_snapshot": {
+    "run_id": "run_1b9f45f0",
+    "batch_id": "batch_570f4927",
+    "student_id": "student_003",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_003",
+      "name": "Rohan Das",
+      "consent": true,
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "skills": {
+        "Python": "advanced",
+        "Machine Learning": "intermediate",
+        "Deep Learning": "intermediate",
+        "TensorFlow": "intermediate",
+        "SQL": "intermediate",
+        "DSA": "intermediate",
+        "Statistics": "intermediate"
+      },
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "coding_stats": {
+        "problems_solved": 180,
+        "contest_rating": 1320
+      }
+    },
+    "resume_summary": {
+      "name": "Rohan Das",
+      "branch": "Computer Science",
+      "cgpa": 8.1,
+      "top_skills": [
+        "Python (advanced)",
+        "Machine Learning (intermediate)",
+        "Deep Learning (intermediate)",
+        "TensorFlow (intermediate)",
+        "SQL (intermediate)",
+        "DSA (intermediate)",
+        "Statistics (intermediate)"
+      ],
+      "weak_skills": [],
+      "projects_count": 3,
+      "projects": [
+        "Image classification CNN",
+        "NLP sentiment analysis pipeline",
+        "Recommendation system"
+      ],
+      "problems_solved": 180,
+      "contest_rating": 1320,
+      "completeness": "complete"
+    },
+    "skill_gap": {
+      "current_skills": [
+        {
+          "skill": "DSA",
+          "level": "intermediate",
+          "status": "met"
+        }
+      ],
+      "required_skills": [
+        "DSA",
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "missing_skills": [
+        "Java",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ],
+      "skill_gaps": [
+        {
+          "skill": "Java",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "DBMS",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Operating Systems",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        },
+        {
+          "skill": "Computer Networks",
+          "current_level": "missing",
+          "required_level": "intermediate+",
+          "gap_severity": "critical"
+        }
+      ],
+      "coverage_score": 15.0,
+      "benchmark_source": "Role requirements: Software Engineer",
+      "preferred_skills": [
+        "Python",
+        "System Design",
+        "Git"
+      ]
+    },
+    "coding_analytics": {},
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent",
+      "skill_gap_agent"
+    ],
+    "checkpoint_id": "cp_ed8aaf56cb5e",
+    "current_node": "skill_gap_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Rohan Das (student_003)",
+      "Skill gap analysis: 1 met, 4 gaps, coverage=15.0%"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent",
+    "skill_gap_agent"
+  ],
+  "status": "valid"
+}

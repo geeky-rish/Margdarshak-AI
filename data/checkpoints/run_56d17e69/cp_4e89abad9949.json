@@ -1,0 +1,95 @@
+{
+  "checkpoint_id": "cp_4e89abad9949",
+  "run_id": "run_56d17e69",
+  "batch_id": "batch_4ea435d9",
+  "student_id": "student_002",
+  "timestamp": "2026-09-29T05:00:04.224131+00:00",
+  "node": "resume_agent",
+  "state_snapshot": {
+    "run_id": "run_56d17e69",
+    "batch_id": "batch_4ea435d9",
+    "student_id": "student_002",
+    "consent": true,
+    "target_role": "Software Engineer",
+    "target_companies": [],
+    "focus_areas": [],
+    "locked_plan": null,
+    "profile": {
+      "student_id": "student_002",
+      "name": "Priya Sharma",
+      "consent": true,
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "skills": {
+        "Python": "advanced",
+        "SQL": "advanced",
+        "Statistics": "intermediate",
+        "Excel": "intermediate",
+        "Tableau": "beginner",
+        "Machine Learning": "beginner",
+        "DSA": "beginner"
+      },
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "coding_stats": {
+        "problems_solved": 120,
+        "contest_rating": 1100
+      }
+    },
+    "resume_summary": {
+      "name": "Priya Sharma",
+      "branch": "Information Technology",
+      "cgpa": 8.9,
+      "top_skills": [
+        "Python (advanced)",
+        "SQL (advanced)",
+        "Statistics (intermediate)",
+        "Excel (intermediate)"
+      ],
+      "weak_skills": [
+        "Tableau",
+        "Machine Learning",
+        "DSA"
+      ],
+      "projects_count": 2,
+      "projects": [
+        "Sales forecasting dashboard",
+        "Customer churn analysis"
+      ],
+      "problems_solved": 120,
+      "contest_rating": 1100,
+      "completeness": "complete"
+    },
+    "skill_gap": {},
+    "coding_analytics": {},
+    "company_matches": [],
+    "placement_score": 0.0,
+    "match_confidence": 0.0,
+    "match_reasoning": "",
+    "interview_results": {},
+    "learning_roadmap": [],
+    "validation_report": null,
+    "retry_count": 0,
+    "approval_status": "draft",
+    "reviewer_feedback": "",
+    "approval_record": null,
+    "completed_nodes": [
+      "resume_agent"
+    ],
+    "checkpoint_id": "cp_48441d28bf43",
+    "current_node": "resume_agent",
+    "readiness_analysis": null,
+    "final_report": null,
+    "evidence": [
+      "Profile loaded for Priya Sharma (student_002)"
+    ],
+    "errors": [],
+    "status": "running"
+  },
+  "completed_nodes": [
+    "resume_agent"
+  ],
+  "status": "valid"
+}

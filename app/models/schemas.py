@@ -2,7 +2,7 @@
 schemas.py — Domain models for the Placement Readiness & Career Intelligence Portal.
 
 All Pydantic v2 models that represent the core domain contracts shared across
-Labs 1–5. No business logic lives here; only data shapes.
+Labs 1–8. No business logic lives here; only data shapes.
 """
 
 from __future__ import annotations
@@ -278,5 +278,228 @@ class CreateStudentRequest(BaseModel):
 
 class HealthResponse(BaseModel):
     status: str = "ok"
-    version: str = "1.0.0"
-    labs_active: list[str] = Field(default_factory=lambda: ["lab1", "lab2", "lab3", "lab4", "lab5"])
+    version: str = "2.0.0"
+    labs_active: list[str] = Field(
+        default_factory=lambda: ["lab1", "lab2", "lab3", "lab4", "lab5", "lab6", "lab7", "lab8"]
+    )
+
+
+# ---------------------------------------------------------------------------
+# Lab 6 — Runtime / Audit / Checkpoint / Approval
+# ---------------------------------------------------------------------------
+
+
+class AuditEvent(BaseModel):
+    """A single auditable event in the runtime execution log."""
+
+    event_id: str
+    run_id: str
+    batch_id: str | None = None
+    student_id: str | None = None
+    timestamp: str
+    node: str = Field(..., description="Graph node or step name")
+    agent: str = Field(default="", description="Agent that performed the action")
+    action: str = Field(..., description="What was done")
+    input_summary: dict = Field(default_factory=dict)
+    output_summary: dict = Field(default_factory=dict)
+    status: Literal["started", "completed", "failed", "skipped", "retrying"] = "started"
+    error: str | None = None
+    retry_count: int = 0
+    checkpoint_id: str | None = None
+    approval_state: str | None = None
+    duration_ms: float | None = None
+
+
+class CheckpointData(BaseModel):
+    """Serialisable snapshot of a run's state at a meaningful transition."""
+
+    checkpoint_id: str
+    run_id: str
+    batch_id: str | None = None
+    student_id: str | None = None
+    timestamp: str
+    node: str = Field(..., description="Node at which checkpoint was taken")
+    state_snapshot: dict = Field(
+        default_factory=dict,
+        description="Serialised graph state at this point",
+    )
+    completed_nodes: list[str] = Field(default_factory=list)
+    status: Literal["valid", "invalidated"] = "valid"
+
+
+class ApprovalRecord(BaseModel):
+    """Records a human approval decision on a run's output."""
+
+    approval_id: str
+    run_id: str
+    student_id: str
+    reviewer_id: str
+    decision: Literal["approved", "rejected", "edit_requested", "override"]
+    timestamp: str
+    comments: str = ""
+    previous_status: str = ""
+    resulting_status: str = ""
+
+
+class BudgetConfig(BaseModel):
+    """Configurable budget limits for a runtime execution."""
+
+    max_retries: int = Field(default=3, ge=0, description="Max validation retries per run")
+    max_agent_calls: int = Field(default=50, ge=1, description="Max total agent/tool invocations")
+    max_execution_seconds: float = Field(default=300.0, gt=0, description="Max wall-clock time")
+    max_validation_attempts: int = Field(default=3, ge=1)
+
+
+class ValidationFailure(BaseModel):
+    """One specific validation check that failed."""
+
+    check: str
+    severity: Literal["error", "warning"]
+    message: str
+    affected_node: str = ""
+
+
+class ValidationReport(BaseModel):
+    """Structured output from the Validation Agent."""
+
+    passed: bool
+    failures: list[ValidationFailure] = Field(default_factory=list)
+    warnings: list[ValidationFailure] = Field(default_factory=list)
+    diagnosis: str = ""
+    validated_at: str = ""
+
+
+# ---------------------------------------------------------------------------
+# Lab 7 — Graph State
+# ---------------------------------------------------------------------------
+
+
+class GraphState(BaseModel):
+    """
+    Strongly typed shared state for the Lab 7 agentic node graph.
+
+    Carries all data through the pipeline from intake to publish.
+    """
+
+    # Identity
+    run_id: str
+    batch_id: str | None = None
+    student_id: str
+    consent: bool = False
+
+    # Request
+    target_role: str = ""
+    target_companies: list[str] = Field(default_factory=list)
+    focus_areas: list[str] = Field(default_factory=list)
+
+    # Plan
+    locked_plan: ReadinessPlan | None = None
+
+    # Resume / Profile
+    profile: StudentProfile | None = None
+    resume_summary: dict = Field(default_factory=dict)
+
+    # Analysis
+    skill_gap: dict = Field(default_factory=dict)
+    coding_analytics: dict = Field(default_factory=dict)
+
+    # Job matching
+    company_matches: list[dict] = Field(default_factory=list)
+    placement_score: float = 0.0
+    match_confidence: float = 0.0
+    match_reasoning: str = ""
+
+    # Interview / Roadmap
+    interview_results: dict = Field(default_factory=dict)
+    learning_roadmap: list[str] = Field(default_factory=list)
+
+    # Validation
+    validation_report: ValidationReport | None = None
+    retry_count: int = 0
+
+    # Approval
+    approval_status: Literal[
+        "draft", "validated", "pending_approval", "approved",
+        "edit_requested", "rejected", "published",
+    ] = "draft"
+    reviewer_feedback: str = ""
+    approval_record: ApprovalRecord | None = None
+
+    # Audit / Checkpoint
+    completed_nodes: list[str] = Field(default_factory=list)
+    checkpoint_id: str | None = None
+    current_node: str = ""
+
+    # Output
+    readiness_analysis: ReadinessAnalysis | None = None
+    final_report: ReadinessReport | None = None
+    evidence: list[str] = Field(default_factory=list)
+    errors: list[str] = Field(default_factory=list)
+
+    # Status
+    status: Literal[
+        "running", "completed", "failed", "pending_approval",
+        "approved", "published", "cancelled",
+    ] = "running"
+
+
+# ---------------------------------------------------------------------------
+# Lab 8 — Batch / Swarm
+# ---------------------------------------------------------------------------
+
+
+class StudentRunResult(BaseModel):
+    """Per-student result within a batch execution."""
+
+    student_id: str
+    run_id: str
+    status: Literal["success", "failed", "pending_approval", "requires_review"]
+    readiness_score: float | None = None
+    approval_status: str = "draft"
+    error: str | None = None
+    report: ReadinessReport | None = None
+    duration_ms: float = 0.0
+
+
+class BatchResult(BaseModel):
+    """Aggregated result from a parallel batch execution (Lab 8)."""
+
+    batch_id: str
+    total_students: int
+    successful: list[StudentRunResult] = Field(default_factory=list)
+    failed: list[StudentRunResult] = Field(default_factory=list)
+    pending_approval: list[StudentRunResult] = Field(default_factory=list)
+    requires_review: list[StudentRunResult] = Field(default_factory=list)
+    aggregate_metrics: dict = Field(default_factory=dict)
+    started_at: str = ""
+    completed_at: str = ""
+    duration_ms: float = 0.0
+
+
+class BatchRunRequest(BaseModel):
+    """Body for POST /batch-runs."""
+
+    student_ids: list[str] = Field(..., min_length=1)
+    target_role: str
+    target_companies: list[str] = Field(default_factory=list)
+    focus_areas: list[str] = Field(default_factory=list)
+    actor_id: str = "system"
+    actor_role: Literal["student", "placement_officer", "system"] = "system"
+    max_concurrency: int = Field(default=5, ge=1, le=20)
+
+
+class ApprovalRequest(BaseModel):
+    """Body for POST /runs/{run_id}/approve."""
+
+    reviewer_id: str
+    decision: Literal["approved", "rejected", "edit_requested", "override"]
+    comments: str = ""
+
+
+class ReviseRequest(BaseModel):
+    """Body for POST /runs/{run_id}/revise."""
+
+    reviewer_id: str
+    feedback: str
+    regenerate_nodes: list[str] = Field(default_factory=list)
+
